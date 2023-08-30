@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ProductBatchInfoMapper">
+
+    <resultMap type="ProductBatchInfo" id="productBatchInfoResult">
+        <id property="id" column="id"/>
+        <result property="batchId" column="batch_id"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="status" column="status"/>
+        <result property="quotation" column="quotation"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectProductBatchInfoVo">
+        SELECT id,batch_id,owner_id,STATUS,quotation,create_time,update_time FROM batch_info
+    </sql>
+
+    
+    <select id="selectProductBatchInfoList" parameterType="Long" resultMap="productBatchInfoResult">
+        <include refid="selectProductBatchInfoVo"/>
+        <where>
+			<if test="ownerId != null and ownerId != ''">
+				AND owner_id = #{ownerId}
+			</if>
+		</where>
+    </select>
+
+    <insert id="insertProductBatch" parameterType="ProductBatchInfo">
+        insert into batch_info(batch_id,owner_id,STATUS,quotation,create_time,update_time
+        )values(#{batch_id},#{owner_id},#{status},#{quotation},now(),now()
+        )
+    </insert>
+
+    <update id="updateProductBatch" parameterType="ProductBatchInfo">
+        update sys_dept
+        <set>
+            <if test="batchId != null and batchId != ''">batch_id = #{batchId},</if>
+            <if test="quotation != null">quotation = #{quotation},</if>
+            <if test="status != null">status = #{status},</if>
+            update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
