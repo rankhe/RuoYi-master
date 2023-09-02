@@ -13,5 +13,5 @@ public interface IProductInfoService
      * @param batchId 产品批次号
      * @return 融资历史集合
      */
-    public List<ProductInfo> selectProductInfoList(Long batchId);
+    List<ProductInfo> selectProductInfoList(Long batchId);
 }

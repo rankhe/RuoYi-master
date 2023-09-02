@@ -57,16 +57,17 @@
         // var editFlag = [[${@permission.hasPermi('system:notice:edit')}]];
         // var removeFlag = [[${@permission.hasPermi('system:notice:remove')}]];
         // var types = [[${@dict.getType('sys_notice_type')}]];
-        // var datas = [[${@dict.getType('sys_notice_status')}]];
-        var prefix = ctx + "system/corporate";
-
+        var datas = [[${@dict.getType('sys_notice_status')}]];
+        var prefix = ctx + "product/management";
+		var batchId = ${batchId};
+		console.log(batchId);
         $(function() {
             var options = {
-                url: prefix + "/list",
+                url: prefix + "/product/list?batchId="+batchId,
                 // createUrl: prefix + "/add",
                 // updateUrl: prefix + "/edit/{id}",
                 // removeUrl: prefix + "/remove",
-                modalName: "企业信息",
+                modalName: "产品列表",
                 columns: [
 				// 		{
 		        //     checkbox: true
@@ -77,12 +78,12 @@
 				// 	title : '序号'
 				// },
 				{
-					field : 'companyName',
-					title : '公司名称'
+					field : 'batchNo',
+					title : '批次编号'
 				},
 				{
-		            field: 'investorName',
-		            title: '投资机构',
+		            field: 'createTime',
+		            title: '创建时间',
 		            align: 'center'
 					// ,
 		            // formatter: function(value, row, index) {

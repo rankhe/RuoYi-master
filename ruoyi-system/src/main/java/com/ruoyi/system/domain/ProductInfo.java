@@ -20,7 +20,15 @@ public class ProductInfo
 
     private Integer t2Cnt;
 
+    private Integer t3Cnt;
+
+    private Integer index;
+
+    private Byte status;
+
     private Long price;
 
     private Date createTime;
+
+    private Date updateTime;
 }

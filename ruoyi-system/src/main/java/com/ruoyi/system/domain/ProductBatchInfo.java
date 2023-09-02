@@ -14,13 +14,14 @@ import java.util.Date;
 @Data
 public class ProductBatchInfo
 {
+    private Long id;
     // 批次号
-    private Long  batchId;
+    private Long  batchNo;
 
     // 创建时间
     private Date createTime;
 
-    //
+    //所有者
     private Long ownerId;
 
     // 发布人
@@ -31,5 +32,8 @@ public class ProductBatchInfo
 
     //报价人次
     private Integer quotation;
+
+    // 更新时间
+    private Date updateTime;
 
 }
