@@ -58,4 +58,10 @@ public interface ProdCategoryMapper
      * @return 结果
      */
     public int deleteProdCategoryByIds(String[] ids);
+
+    /**
+     *
+     * @return
+     */
+    List<ProdCategory> selectCategoryAll();
 }

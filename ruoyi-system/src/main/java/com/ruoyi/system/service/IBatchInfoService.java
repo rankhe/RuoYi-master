@@ -28,6 +28,14 @@ public interface IBatchInfoService
     public List<BatchInfo> selectBatchInfoList(BatchInfo batchInfo);
 
     /**
+     * 产品融资信息
+     *
+     * @param ownerUserId 批次所属userId
+     * @return 融资历史集合
+     */
+    public List<BatchInfo> selectProductBatchInfoList(Long ownerUserId);
+
+    /**
      * 新增批次信息
      * 
      * @param batchInfo 批次信息

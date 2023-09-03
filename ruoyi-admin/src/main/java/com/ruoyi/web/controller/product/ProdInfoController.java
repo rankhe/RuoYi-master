@@ -1,30 +1,30 @@
 package com.ruoyi.web.controller.product;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.ShiroUtils;
+import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.ProdCategory;
+import com.ruoyi.system.domain.ProdInfo;
+import com.ruoyi.system.service.IBatchInfoService;
 import com.ruoyi.system.service.IProdCategoryService;
+import com.ruoyi.system.service.IProdInfoService;
 import com.ruoyi.web.controller.product.vo.ProdInfoVO;
-import com.ruoyi.web.controller.product.vo.ProdQuotationHistoryVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.ProdInfo;
-import com.ruoyi.system.service.IProdInfoService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 产品信息Controller
@@ -43,6 +43,9 @@ public class ProdInfoController extends BaseController
 
     @Autowired
     private IProdCategoryService prodCategoryService;
+
+    @Autowired
+    private IBatchInfoService batchInfoService;
 
     @RequiresPermissions("system:info:view")
     @GetMapping()
@@ -64,7 +67,7 @@ public class ProdInfoController extends BaseController
         List<ProdInfoVO> result = list.stream().map(i -> {
             ProdInfoVO vo = new ProdInfoVO();
             BeanUtils.copyProperties(i, vo);
-            final Long categoryId = prodInfo.getCategoryId();
+            final Long categoryId = i.getCategoryId();
             final ProdCategory prodCategory = prodCategoryService.selectProdCategoryById(categoryId);
             if(prodCategory != null)
             {
@@ -93,8 +96,10 @@ public class ProdInfoController extends BaseController
      * 新增产品信息
      */
     @GetMapping("/add")
-    public String add()
+    public String add(ModelMap modelMap)
     {
+        modelMap.put("batches",batchInfoService.selectProductBatchInfoList(getUserId()));
+        modelMap.put("categories", prodCategoryService.selectCategoryAll());
         return prefix + "/add";
     }
 
@@ -144,5 +149,43 @@ public class ProdInfoController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(prodInfoService.deleteProdInfoByIds(ids));
+    }
+
+    /**
+     * 导入产品信息
+     * @param file
+     * @param updateSupport
+     * @return
+     * @throws Exception
+     */
+    @RequiresPermissions("system:info:import")
+    @PostMapping("/importData")
+    @ResponseBody
+    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
+    {
+        ExcelUtil<ProdInfoVO> util = new ExcelUtil<ProdInfoVO>(ProdInfoVO.class);
+        List<ProdInfoVO> prodInfoVOS = util.importExcel(file.getInputStream());
+
+        List<ProdInfo> prodInfoList =  new ArrayList<>();
+        if(!CollectionUtils.isEmpty(prodInfoVOS))
+        {
+            prodInfoList = prodInfoVOS.stream().map(i->{
+                ProdInfo prodInfo = new ProdInfo();
+                BeanUtils.copyProperties(i,prodInfo);
+                return prodInfo;
+            }).collect(Collectors.toList());
+        }
+        String operName = ShiroUtils.getSysUser().getLoginName();
+        Integer message = prodInfoService.importProduct(prodInfoList, updateSupport, operName);
+        return AjaxResult.success(message);
+    }
+
+    @RequiresPermissions("system:info:view")
+    @GetMapping("/importTemplate")
+    @ResponseBody
+    public AjaxResult importTemplate()
+    {
+        ExcelUtil<ProdInfoVO> util = new ExcelUtil<ProdInfoVO>(ProdInfoVO.class);
+        return util.importTemplateExcel("产品数据");
     }
 }

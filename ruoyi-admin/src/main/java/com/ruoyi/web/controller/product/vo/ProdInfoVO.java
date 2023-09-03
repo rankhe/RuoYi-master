@@ -1,9 +1,11 @@
 package com.ruoyi.web.controller.product.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 public class ProdInfoVO implements Serializable
@@ -58,4 +60,18 @@ public class ProdInfoVO implements Serializable
     /** 状态1 正常 */
     @Excel(name = "状态1 正常")
     private Long status;
+
+    /** 创建者 */
+    private String createBy;
+
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    /** 更新者 */
+    private String updateBy;
+
+    /** 更新时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
 }

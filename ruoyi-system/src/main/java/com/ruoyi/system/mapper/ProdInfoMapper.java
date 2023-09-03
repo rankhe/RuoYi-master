@@ -58,4 +58,5 @@ public interface ProdInfoMapper
      * @return 结果
      */
     public int deleteProdInfoByIds(String[] ids);
+
 }

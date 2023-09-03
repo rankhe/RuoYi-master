@@ -227,5 +227,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			sysdate()
  		)
 	</insert>
-	
+
+
+
+	<select id="selectUserByRoleId" parameterType="Long" resultMap="SysUserResult">
+		select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.user_type, u.email, u.avatar, u.phonenumber, u.status, u.create_time
+		from sys_user u
+		left join sys_user_role ur on u.user_id = ur.user_id
+		<if test="roleId != null">
+			AND ur.role_id = #{roleId}
+		</if>
+	</select>
 </mapper> 

@@ -14,23 +14,23 @@
                                 <label>产品名称：</label>
                                 <input type="text" name="name"/>
                             </li>
-                            <li>
-                                <label>产品分类id：</label>
-                                <input type="text" name="categoryId"/>
-                            </li>
+<!--                            <li>-->
+<!--                                <label>产品分类id：</label>-->
+<!--                                <input type="text" name="categoryId"/>-->
+<!--                            </li>-->
                             <li>
                                 <label>批次：</label>
                                 <input type="text" name="batchId"/>
                             </li>
 
                             <li>
-                                <label>细分类别1：</label>
+                                <label>细分类别：</label>
                                 <input type="text" name="subtype1"/>
                             </li>
-                            <li>
-                                <label>细分类别2：</label>
-                                <input type="text"  name="subtype2"/>
-                            </li>
+<!--                            <li>-->
+<!--                                <label>细分类别2：</label>-->
+<!--                                <input type="text"  name="subtype2"/>-->
+<!--                            </li>-->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -53,6 +53,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:info:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-info" onclick="$.table.importExcel()"  shiro:hasPermission="system:info:import">
+                    <i class="fa fa-upload"></i> 导入
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -72,6 +75,8 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
+                importUrl: prefix + "/importData",
+                importTemplateUrl: prefix + "/importTemplate",
                 modalName: "产品信息",
                 columns: [{
                     checkbox: true
@@ -86,17 +91,16 @@
                     title: '产品名称'
                 },
                 {
-                    field: 'categoryId',
-                    title: '产品分类id'
+                    field: 'batchId',
+                    title: '所属批号'
                 },
+                // {
+                //     field: 'categoryId',
+                //     title: '产品分类id'
+                // },
                 {
                     field: 'prodCategory',
                     title: '产品分类'
-                },
-
-                {
-                    field: 'batchId',
-                    title: '批次ID'
                 },
                 {
                     field: 'subtype1',
@@ -122,16 +126,14 @@
                     field: 'count',
                     title: '数量'
                 },
-
-
                 {
-                    field: 'idx',
-                    title: '展示顺序'
+                    field: 'createTime',
+                    title: '发布时间'
                 },
-                {
-                    field: 'status',
-                    title: '状态1 正常'
-                },
+                // {
+                //     field: 'status',
+                //     title: '状态'
+                // },
                 {
                     title: '操作',
                     align: 'center',
@@ -146,5 +148,20 @@
             $.table.init(options);
         });
     </script>
+
+     <script id="importTpl" type="text/template">
+         <form enctype="multipart/form-data" class="mt20 mb10">
+             <div class="col-xs-offset-1">
+                 <input type="file" id="file" name="file"/>
+                 <div class="mt10 pt5">
+                     <input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的数据
+                     &nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+                 </div>
+                 <font color="red" class="pull-left mt10">
+                     提示：仅允许导入“xls”或“xlsx”格式文件！
+                 </font>
+             </div>
+         </form>
+     </script>
 </body>
 </html>

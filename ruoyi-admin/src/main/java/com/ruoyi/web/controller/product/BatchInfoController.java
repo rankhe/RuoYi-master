@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.product;
 
+import java.util.Calendar;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,21 @@ public class BatchInfoController extends BaseController
     }
 
     /**
+     * 查询指定发布者发布的批次
+     */
+    @RequiresPermissions("system:batch:list")
+    @PostMapping("/list/{publish}")
+    @ResponseBody
+    public List<BatchInfo> list(@PathVariable(value = "publish") Long publish)
+    {
+        startPage();
+        logger.info("publish[{}]",publish);
+        BatchInfo batchInfo = new  BatchInfo();
+        batchInfo.setOwnerId(publish);
+        List<BatchInfo> list = batchInfoService.selectBatchInfoList(batchInfo);
+        return list;
+    }
+    /**
      * 导出批次信息列表
      */
     @RequiresPermissions("system:batch:export")
@@ -86,6 +102,10 @@ public class BatchInfoController extends BaseController
     @ResponseBody
     public AjaxResult addSave(BatchInfo batchInfo)
     {
+        batchInfo.setOwnerId(getUserId());
+        batchInfo.setQuotation(0l);
+        batchInfo.setCreateBy(getLoginName());
+        batchInfo.setCreateTime(Calendar.getInstance().getTime());
         return toAjax(batchInfoService.insertBatchInfo(batchInfo));
     }
 

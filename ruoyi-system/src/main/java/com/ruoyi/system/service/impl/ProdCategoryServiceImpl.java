@@ -94,4 +94,9 @@ public class ProdCategoryServiceImpl implements IProdCategoryService
     {
         return prodCategoryMapper.deleteProdCategoryById(id);
     }
+
+    @Override public List<ProdCategory> selectCategoryAll()
+    {
+        return prodCategoryMapper.selectCategoryAll();
+    }
 }

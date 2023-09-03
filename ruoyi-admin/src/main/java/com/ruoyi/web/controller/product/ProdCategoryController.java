@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -83,6 +84,8 @@ public class ProdCategoryController extends BaseController
     @ResponseBody
     public AjaxResult addSave(ProdCategory prodCategory)
     {
+        prodCategory.setCreator(getLoginName());
+        prodCategory.setCreateTime(Calendar.getInstance().getTime());
         return toAjax(prodCategoryService.insertProdCategory(prodCategory));
     }
 
@@ -107,6 +110,8 @@ public class ProdCategoryController extends BaseController
     @ResponseBody
     public AjaxResult editSave(ProdCategory prodCategory)
     {
+        prodCategory.setUpdator(getLoginName());
+        prodCategory.setUpdateTime(Calendar.getInstance().getTime());
         return toAjax(prodCategoryService.updateProdCategory(prodCategory));
     }
 

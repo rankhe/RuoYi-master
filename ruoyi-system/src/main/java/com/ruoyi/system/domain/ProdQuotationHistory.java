@@ -26,13 +26,25 @@ public class ProdQuotationHistory extends BaseEntity
     @Excel(name = "产品分类id")
     private Long prodId;
 
+    /** 报价人*/
+    @Excel(name = "报价人")
+    private Long quoterUserId;
+
     /** 报价人手机号 */
     @Excel(name = "报价人手机号")
-    private Long userId;
+    private Long quoterUserMobile;
+
+    /** 放标人 */
+    @Excel(name = "放标人")
+    private Long ownerUserId;
 
     /** 产品批次ID */
     @Excel(name = "产品批次ID")
     private Long batchId;
+
+    /** 产品批次ID */
+    @Excel(name = "产品批次NO")
+    private String batchNO;
 
     /** 报价人微信昵称 */
     @Excel(name = "报价人微信昵称")
@@ -47,7 +59,7 @@ public class ProdQuotationHistory extends BaseEntity
     private Long price;
 
     /** 状态1 正常 */
-    @Excel(name = "状态1 正常")
+    @Excel(name = "状态")
     private Long status;
 
     public void setId(Long id) 
@@ -77,19 +89,7 @@ public class ProdQuotationHistory extends BaseEntity
     {
         return prodId;
     }
-    public void setUserId(Long userId) 
-    {
-        this.userId = userId;
-    }
 
-    public Long getUserId() 
-    {
-        return userId;
-    }
-    public void setBatchId(Long batchId) 
-    {
-        this.batchId = batchId;
-    }
 
     public Long getBatchId() 
     {
@@ -118,34 +118,82 @@ public class ProdQuotationHistory extends BaseEntity
         this.price = price;
     }
 
-    public Long getPrice() 
+    public Long getPrice()
     {
         return price;
     }
-    public void setStatus(Long status) 
+    public void setStatus(Long status)
     {
         this.status = status;
     }
 
-    public Long getStatus() 
+    public Long getStatus()
     {
         return status;
     }
 
+    public Long getQuoterUserId()
+    {
+        return quoterUserId;
+    }
+
+    public void setQuoterUserId(Long quoterUserId)
+    {
+        this.quoterUserId = quoterUserId;
+    }
+
+    public Long getQuoterUserMobile()
+    {
+        return quoterUserMobile;
+    }
+
+    public void setQuoterUserMobile(Long quoterUserMobile)
+    {
+        this.quoterUserMobile = quoterUserMobile;
+    }
+
+    public Long getOwnerUserId()
+    {
+        return ownerUserId;
+    }
+
+    public void setOwnerUserId(Long ownerUserId)
+    {
+        this.ownerUserId = ownerUserId;
+    }
+
+    public void setBatchId(Long batchId)
+    {
+        this.batchId = batchId;
+    }
+
+    public String getBatchNO()
+    {
+        return batchNO;
+    }
+
+    public void setBatchNO(String batchNO)
+    {
+        this.batchNO = batchNO;
+    }
+
     @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("name", getName())
-            .append("prodId", getProdId())
-            .append("userId", getUserId())
-            .append("batchId", getBatchId())
-            .append("nickName", getNickName())
-            .append("count", getCount())
-            .append("price", getPrice())
-            .append("status", getStatus())
-            .append("updateTime", getUpdateTime())
-            .append("createTime", getCreateTime())
-            .toString();
+    public String toString()
+    {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("id", getId())
+                .append("name", getName())
+                .append("prodId", getProdId())
+                .append("quoterUserId", getQuoterUserId())
+                .append("ownerUserId", getOwnerUserId())
+                .append("quoterUserMobile", getQuoterUserMobile())
+                .append("batchId", getBatchId())
+                .append("nickName", getNickName())
+                .append("count", getCount())
+                .append("price", getPrice())
+                .append("status", getStatus())
+                .append("updateTime", getUpdateTime())
+                .append("createTime", getCreateTime())
+                .toString();
     }
 }

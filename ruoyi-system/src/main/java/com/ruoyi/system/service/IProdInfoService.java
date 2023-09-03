@@ -1,6 +1,8 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.system.domain.ProdInfo;
 
 /**
@@ -58,4 +60,13 @@ public interface IProdInfoService
      * @return 结果
      */
     public int deleteProdInfoById(Long id);
+
+    /**
+     * 导入产品信息
+     * @param prodInfoList
+     * @param updateSupport
+     * @param operName
+     * @return
+     */
+    Integer importProduct(List<ProdInfo> prodInfoList, boolean updateSupport, String operName);
 }

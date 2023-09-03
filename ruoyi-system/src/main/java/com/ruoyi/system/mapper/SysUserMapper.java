@@ -121,4 +121,11 @@ public interface SysUserMapper
      * @return 结果
      */
     public SysUser checkEmailUnique(String email);
+
+    /**
+     * 通过角色Id查询用户列表
+     * @param roleId
+     * @return
+     */
+    List<SysUser> selectUserByRoleId(Long roleId);
 }

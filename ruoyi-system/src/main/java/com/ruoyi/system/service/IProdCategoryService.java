@@ -58,4 +58,6 @@ public interface IProdCategoryService
      * @return 结果
      */
     public int deleteProdCategoryById(Long id);
+
+    List<ProdCategory> selectCategoryAll();
 }

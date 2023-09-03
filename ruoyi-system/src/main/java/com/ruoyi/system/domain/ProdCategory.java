@@ -27,8 +27,8 @@ public class ProdCategory extends BaseEntity
     private Long idx;
 
     /** 分类状态1 有效 */
-    @Excel(name = "分类状态1 有效")
-    private Long status;
+    @Excel(name = "分类状态")
+    private Long status = 1l;
 
     /** 创建人 */
     @Excel(name = "创建人")

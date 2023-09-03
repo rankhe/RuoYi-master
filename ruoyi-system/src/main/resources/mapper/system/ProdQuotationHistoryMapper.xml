@@ -8,7 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
         <result property="prodId"    column="prod_id"    />
-        <result property="userId"    column="user_id"    />
+        <result property="quoterUserId"    column="quoter_user_id"    />
+        <result property="quoterUserMobile"    column="quoter_user_mobile"    />
+        <result property="ownerUserId"    column="owner_user_id"    />
         <result property="batchId"    column="batch_id"    />
         <result property="nickName"    column="nick_name"    />
         <result property="count"    column="count"    />
@@ -19,7 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectProdQuotationHistoryVo">
-        select id, name, prod_id, user_id, batch_id, nick_name, count, price, status, update_time, create_time from prod_quotation_history
+        select id, name, prod_id, quoter_user_id,quoter_user_mobile,owner_user_id, batch_id, nick_name, count, price, status, update_time, create_time
+        from prod_quotation_history
     </sql>
 
     <select id="selectProdQuotationHistoryList" parameterType="ProdQuotationHistory" resultMap="ProdQuotationHistoryResult">
@@ -27,7 +30,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="prodId != null "> and prod_id = #{prodId}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="quoterUserMobile != null and quoterUserMobile != ''"> and quoter_user_mobile = #{quoterUserMobile}</if>
+            <if test="quoterUserId != null "> and quoter_user_id = #{quoterUserId}</if>
+            <if test="ownerUserId != null "> and owner_user_id = #{ownerUserId}</if>
             <if test="batchId != null "> and batch_id = #{batchId}</if>
             <if test="nickName != null  and nickName != ''"> and nick_name like concat('%', #{nickName}, '%')</if>
             <if test="count != null "> and count = #{count}</if>
@@ -46,7 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">name,</if>
             <if test="prodId != null">prod_id,</if>
-            <if test="userId != null">user_id,</if>
+            <if test="quoterUserId != null">quoter_user_id,</if>
+            <if test="quoterUserMobile != null">quoter_user_mobile,</if>
+            <if test="ownerUserId != null">owner_user_id,</if>
             <if test="batchId != null">batch_id,</if>
             <if test="nickName != null">nick_name,</if>
             <if test="count != null">count,</if>
@@ -58,7 +65,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
             <if test="prodId != null">#{prodId},</if>
-            <if test="userId != null">#{userId},</if>
+            <if test="quoterUserId != null">#{quoterUserId},</if>
+            <if test="quoterUserMobile != null and quoterUserMobile != ''">#{quoterUserMobile},</if>
+            <if test="ownerUserId != null">#{ownerUserId},</if>
             <if test="batchId != null">#{batchId},</if>
             <if test="nickName != null">#{nickName},</if>
             <if test="count != null">#{count},</if>
@@ -74,9 +83,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="prodId != null">prod_id = #{prodId},</if>
-            <if test="userId != null">user_id = #{userId},</if>
+            <if test="quoterUserId != null">quoter_user_id = #{quoterUserId},</if>
+            <if test="quoterUserMobile != null and quoterUserMobile != ''">quoter_user_mobile = #{quoterUserMobile},</if>
+            <if test="ownerUserId != null">owner_user_id = #{ownerUserId},</if>
             <if test="batchId != null">batch_id = #{batchId},</if>
-            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
             <if test="count != null">count = #{count},</if>
             <if test="price != null">price = #{price},</if>
             <if test="status != null">status = #{status},</if>

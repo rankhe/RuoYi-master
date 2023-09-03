@@ -76,6 +76,15 @@ public interface ISysUserService
     public List<SysUserRole> selectUserRoleByUserId(Long userId);
 
     /**
+     * 通过角色Id查询用户列表
+     *
+     * @param roleId 角色ID
+     * @return 用户列表
+     */
+    List<SysUser> selectUserByRoleId(Long roleId);
+
+
+    /**
      * 通过用户ID删除用户
      * 
      * @param userId 用户ID

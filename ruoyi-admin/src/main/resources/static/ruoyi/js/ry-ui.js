@@ -1153,6 +1153,22 @@ var table = {
                     $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
                 }
             },
+            // 更新状态
+            updateStatus: function(id,msg) {
+                table.set();
+                if(!msg){
+                    msg = "确定删除该条" + table.options.modalName + "信息吗？";
+                }
+                $.modal.confirm(msg, function() {
+                    var url = $.common.isEmpty(id) ? table.options.updateStatusUrl : table.options.updateStatusUrl+"?id="+id;
+                    if (table.options.type == table_type.bootstrapTreeTable) {
+                        $.operate.put(url);
+                    } else {
+                        var data = { "ids": id };
+                        $.operate.submit(url, "post", "json", data);
+                    }
+                });
+            },
             // 修改信息，以tab页展现
             editTab: function(id) {
                 table.set();

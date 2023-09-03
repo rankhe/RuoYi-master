@@ -45,6 +45,14 @@ public class BatchInfoServiceImpl implements IBatchInfoService
         return batchInfoMapper.selectBatchInfoList(batchInfo);
     }
 
+
+    @Override public List<BatchInfo> selectProductBatchInfoList(Long ownerId)
+    {
+        BatchInfo batchInfo = new BatchInfo();
+        batchInfo.setOwnerId(ownerId);
+        return batchInfoMapper.selectBatchInfoList(batchInfo);
+    }
+
     /**
      * 新增批次信息
      * 

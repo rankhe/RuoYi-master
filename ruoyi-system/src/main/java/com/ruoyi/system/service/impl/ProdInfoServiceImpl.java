@@ -1,13 +1,18 @@
 package com.ruoyi.system.service.impl;
 
-import java.util.List;
+import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.ProdInfo;
+import com.ruoyi.system.mapper.ProdInfoMapper;
+import com.ruoyi.system.service.IProdInfoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.mapper.ProdInfoMapper;
-import com.ruoyi.system.domain.ProdInfo;
-import com.ruoyi.system.service.IProdInfoService;
-import com.ruoyi.common.core.text.Convert;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 产品信息Service业务层处理
@@ -93,5 +98,42 @@ public class ProdInfoServiceImpl implements IProdInfoService
     public int deleteProdInfoById(Long id)
     {
         return prodInfoMapper.deleteProdInfoById(id);
+    }
+
+    @Override
+    public Integer importProduct(List<ProdInfo> prodInfoList, boolean updateSupport, String operName)
+    {
+        AtomicInteger count = new AtomicInteger(0);
+        if(!CollectionUtils.isEmpty(prodInfoList))
+        {
+            prodInfoList.forEach(
+                    p->{
+                        if(updateSupport)
+                        {
+                            ProdInfo condition = new ProdInfo();
+                            condition.setBatchId(p.getBatchId());
+                            condition.setName(p.getName());
+                            List<ProdInfo> prodInfoList1 = prodInfoMapper.selectProdInfoList(condition);
+                            if(!CollectionUtils.isEmpty(prodInfoList1))
+                            {
+                                ProdInfo originProd = prodInfoList1.get(0);
+                                BeanUtils.copyProperties(p,originProd);
+                                originProd.setUpdateBy(operName);
+                                prodInfoMapper.updateProdInfo(originProd);
+                            }
+                        }
+                        else
+                        {
+                            p.setCreateTime(Calendar.getInstance().getTime());
+                            p.setCreateBy(operName);
+//                            p.setUpdateBy(operName);
+//                            p.setUpdateTime();
+                            prodInfoMapper.insertProdInfo(p);
+                        }
+                        count.intValue();
+                    }
+            );
+        }
+        return count.get();
     }
 }
