@@ -108,4 +108,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
+    <select id="checkProdHistoryUnique" parameterType="ProdQuotationHistory" resultMap="ProdQuotationHistoryResult">
+        select id, name, prod_id, quoter_user_id,quoter_user_mobile,owner_user_id, batch_id
+            from prod_quotation_history where prod_id=#{prodId}
+                 and  batch_NO=#{batchNO} and status in(1,2) limit 1
+    </select>
+
 </mapper>

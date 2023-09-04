@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.product;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,7 +116,7 @@ public class ProdQuotationHistoryController extends BaseController
     @GetMapping("/add")
     public String add(ModelMap modelMap)
     {
-        List<SysUser> sysUsers = sysUserService.selectUserByRoleId(1l);
+        List<SysUser> sysUsers = sysUserService.selectUserByRoleId(100l);
         modelMap.put("publishes",sysUsers);
         return prefix + "/add";
     }
@@ -260,5 +261,15 @@ public class ProdQuotationHistoryController extends BaseController
         ProdQuotationHistory prodQuotationHistory = prodQuotationHistoryService.selectProdQuotationHistoryById(id);
         mmap.put("prodQuotationHistory", prodQuotationHistory);
         return prefix + "/editQuoter";
+    }
+
+//    @RequiresPermissions("system:history:remove")
+    @Log(title = "校验报价的唯一性", businessType = BusinessType.OTHER)
+    @PostMapping( "/checkProdHistoryUnique")
+    @ResponseBody
+    public boolean checkProdHistoryUnique(ProdQuotationHistory history)
+    {
+        ProdQuotationHistory prodQuotationHistory = prodQuotationHistoryService.checkProdHistoryUnique(history);
+        return prodQuotationHistory == null;
     }
 }

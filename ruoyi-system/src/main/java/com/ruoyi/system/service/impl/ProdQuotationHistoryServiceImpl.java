@@ -94,4 +94,9 @@ public class ProdQuotationHistoryServiceImpl implements IProdQuotationHistorySer
     {
         return prodQuotationHistoryMapper.deleteProdQuotationHistoryById(id);
     }
+
+    @Override public ProdQuotationHistory checkProdHistoryUnique(ProdQuotationHistory history)
+    {
+        return prodQuotationHistoryMapper.checkProdHistoryUnique(history);
+    }
 }

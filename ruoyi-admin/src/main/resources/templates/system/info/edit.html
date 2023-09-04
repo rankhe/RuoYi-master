@@ -25,10 +25,22 @@
                     <input name="batchId" th:field="*{batchId}" class="form-control" type="text" required>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">细分类别1：</label>
+                <div class="col-sm-8">
+                    <input name="subtype1" th:field="*{subtype1}" class="form-control" type="text">
+                </div>
+            </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">细分类别1数量：</label>
                 <div class="col-sm-8">
                     <input name="t1Cnt" th:field="*{t1Cnt}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">细分类别2：</label>
+                <div class="col-sm-8">
+                    <input name="subtype2" th:field="*{subtype2}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -49,19 +61,8 @@
                     <input name="count" th:field="*{count}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">细分类别1：</label>
-                <div class="col-sm-8">
-                    <input name="subtype1" th:field="*{subtype1}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">细分类别2：</label>
-                <div class="col-sm-8">
-                    <input name="subtype2" th:field="*{subtype2}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
+
+            <div class="form-group">
                 <label class="col-sm-3 control-label">展示顺序：</label>
                 <div class="col-sm-8">
                     <input name="idx" th:field="*{idx}" class="form-control" type="text">

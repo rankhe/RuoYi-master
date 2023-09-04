@@ -4,7 +4,9 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.CommonStatus;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.ProdCategory;
 import com.ruoyi.system.service.IProdCategoryService;
@@ -14,8 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 产品分类Controller
@@ -48,6 +52,10 @@ public class ProdCategoryController extends BaseController
     public TableDataInfo list(ProdCategory prodCategory)
     {
         startPage();
+        if(prodCategory.getStatus() == null)
+        {
+            prodCategory.setStatus(CommonStatus.OK.getCode());
+        }
         List<ProdCategory> list = prodCategoryService.selectProdCategoryList(prodCategory);
         return getDataTable(list);
     }
@@ -124,6 +132,15 @@ public class ProdCategoryController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(prodCategoryService.deleteProdCategoryByIds(ids));
+        String[] strings = Convert.toStrArray(ids);
+        AtomicInteger integer = new AtomicInteger(0);
+        Arrays.stream(strings).forEach(i -> {
+            ProdCategory category = new ProdCategory();
+            category.setId(Long.getLong(i));
+            category.setStatus(-1l);
+            prodCategoryService.updateProdCategory(category);
+            integer.intValue();
+        });
+        return toAjax(integer.get());
     }
 }

@@ -57,7 +57,7 @@ public class ProdInfoController extends BaseController
     /**
      * 查询产品信息列表
      */
-    @RequiresPermissions("system:info:list")
+//    @RequiresPermissions("system:info:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(ProdInfo prodInfo)

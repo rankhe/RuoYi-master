@@ -2,6 +2,8 @@ package com.ruoyi.web.controller.product;
 
 import java.util.Calendar;
 import java.util.List;
+
+import com.ruoyi.common.enums.CommonStatus;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +53,7 @@ public class BatchInfoController extends BaseController
     public TableDataInfo list(BatchInfo batchInfo)
     {
         startPage();
+        batchInfo.setStatus(CommonStatus.OK.getCode());
         List<BatchInfo> list = batchInfoService.selectBatchInfoList(batchInfo);
         return getDataTable(list);
     }
@@ -58,7 +61,7 @@ public class BatchInfoController extends BaseController
     /**
      * 查询指定发布者发布的批次
      */
-    @RequiresPermissions("system:batch:list")
+//    @RequiresPermissions("system:batch:list")
     @PostMapping("/list/{publish}")
     @ResponseBody
     public List<BatchInfo> list(@PathVariable(value = "publish") Long publish)

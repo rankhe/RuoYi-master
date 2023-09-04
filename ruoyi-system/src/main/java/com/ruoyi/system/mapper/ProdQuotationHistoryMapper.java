@@ -58,4 +58,11 @@ public interface ProdQuotationHistoryMapper
      * @return 结果
      */
     public int deleteProdQuotationHistoryByIds(String[] ids);
+
+    /**
+     * 检查报价记录的唯一性
+     * @param history
+     * @return
+     */
+    ProdQuotationHistory checkProdHistoryUnique(ProdQuotationHistory history);
 }

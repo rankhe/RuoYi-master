@@ -58,4 +58,6 @@ public interface IProdQuotationHistoryService
      * @return 结果
      */
     public int deleteProdQuotationHistoryById(Long id);
+
+    ProdQuotationHistory checkProdHistoryUnique(ProdQuotationHistory history);
 }
