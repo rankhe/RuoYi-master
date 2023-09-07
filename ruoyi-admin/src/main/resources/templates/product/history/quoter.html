@@ -54,7 +54,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:history:quoter:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:history:quoter:remove')}]];
-        var prefix = ctx + "system/history/";
+        var prefix = ctx + "product/history/";
         var staData = [[${@dict.getType('pro_qutation_sta')}]];
 
         $(function() {

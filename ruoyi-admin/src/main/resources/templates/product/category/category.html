@@ -46,8 +46,8 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:category:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:category:remove')}]];
-        var prefix = ctx + "system/category";
-
+        var prefix = ctx + "product/category";
+        var staData = [[${@dict.getType('common_status')}]];
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -74,7 +74,10 @@
                 },
                 {
                     field: 'status',
-                    title: '分类状态'
+                    title: '分类状态',
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(staData, item.status);
+                    }
                 },
                 {
                     field: 'creator',

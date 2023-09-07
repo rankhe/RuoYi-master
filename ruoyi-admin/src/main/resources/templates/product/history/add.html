@@ -61,7 +61,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/history";
+        var prefix = ctx + "product/history";
         var data ;
 
         $(document).ready(function() {
@@ -107,7 +107,7 @@
             console.log("loadProdBatch");
             var publisher = $("#publish").val();
             var pub = $.common.isEmpty(publisher) ? 1: publisher;
-            var url = ctx + "system/batch/list/" + pub;
+            var url = ctx + "product/batch/list/" + pub;
             var config = {
                 url: url,
                 type: "post",
@@ -136,7 +136,7 @@
         function loadProdInfo(){
             console.log("loadProdInfo");
             var batchNO = $("#batchNO").val();
-            var url = ctx + "system/info/list";
+            var url = ctx + "product/info/list";
             var data = { "batchId": batchNO };
             var config = {
                 url: url,

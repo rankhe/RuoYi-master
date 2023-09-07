@@ -37,10 +37,10 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2023-09-01
  */
 @Controller
-@RequestMapping("/system/history")
+@RequestMapping("/product/history")
 public class ProdQuotationHistoryController extends BaseController
 {
-    private String prefix = "system/history";
+    private String prefix = "product/history";
 
     @Autowired
     private IProdQuotationHistoryService prodQuotationHistoryService;
@@ -54,7 +54,7 @@ public class ProdQuotationHistoryController extends BaseController
     @Autowired
     private ISysUserService sysUserService;
 
-    @RequiresPermissions("system:history:view")
+    @RequiresPermissions("product:history:view")
     @GetMapping()
     public String history()
     {
@@ -64,7 +64,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 查询产收到的报价
      */
-    @RequiresPermissions("system:history:list")
+    @RequiresPermissions("product:history:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(ProdQuotationHistory prodQuotationHistory)
@@ -96,7 +96,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 导出产品报价信息列表
      */
-    @RequiresPermissions("system:history:export")
+    @RequiresPermissions("product:history:export")
     @Log(title = "产品报价信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -124,7 +124,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 新增保存产品报价信息
      */
-    @RequiresPermissions("system:history:add")
+    @RequiresPermissions("product:history:add")
     @Log(title = "产品报价信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -139,7 +139,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 修改产品报价信息
      */
-    @RequiresPermissions("system:history:edit")
+    @RequiresPermissions("product:history:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -151,7 +151,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 修改保存产品报价信息
      */
-    @RequiresPermissions("system:history:edit")
+    @RequiresPermissions("product:history:edit")
     @Log(title = "产品报价信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -163,7 +163,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 删除产品报价信息
      */
-    @RequiresPermissions("system:history:remove")
+    @RequiresPermissions("product:history:remove")
     @Log(title = "产品报价信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -176,7 +176,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 更新报价状态
      */
-    @RequiresPermissions("system:history:remove")
+    @RequiresPermissions("product:history:remove")
     @Log(title = "更新报价状态", businessType = BusinessType.UPDATE)
     @PostMapping( "/updateStatus")
     @ResponseBody
@@ -188,7 +188,7 @@ public class ProdQuotationHistoryController extends BaseController
         return toAjax(prodQuotationHistoryService.updateProdQuotationHistory(prodQuotationHistory));
     }
 
-    @RequiresPermissions("system:history:quoter:view")
+    @RequiresPermissions("product:history:quoter:view")
     @GetMapping("/quoter")
     public String quoter()
     {
@@ -198,7 +198,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 查询我的报价信息
      */
-    @RequiresPermissions("system:history:quoter/list")
+    @RequiresPermissions("product:history:quoter/list")
     @PostMapping("/quoter/list")
     @ResponseBody
     public TableDataInfo quoterlist(ProdQuotationHistory prodQuotationHistory)
@@ -229,7 +229,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 导出我的报价信息
      */
-    @RequiresPermissions("system:history:quoter:export")
+    @RequiresPermissions("product:history:quoter:export")
     @Log(title = "产品报价信息", businessType = BusinessType.EXPORT)
     @PostMapping("/quoter/export")
     @ResponseBody
@@ -254,7 +254,7 @@ public class ProdQuotationHistoryController extends BaseController
     /**
      * 修改我的产品报价
      */
-    @RequiresPermissions("system:history:quoter:edit")
+    @RequiresPermissions("product:history:quoter:edit")
     @GetMapping("/quoter/edit/{id}")
     public String editQuoter(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -263,7 +263,7 @@ public class ProdQuotationHistoryController extends BaseController
         return prefix + "/editQuoter";
     }
 
-//    @RequiresPermissions("system:history:remove")
+//    @RequiresPermissions("product:history:remove")
     @Log(title = "校验报价的唯一性", businessType = BusinessType.OTHER)
     @PostMapping( "/checkProdHistoryUnique")
     @ResponseBody

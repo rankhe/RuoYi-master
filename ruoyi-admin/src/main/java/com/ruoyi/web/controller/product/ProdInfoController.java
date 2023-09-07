@@ -33,10 +33,10 @@ import java.util.stream.Collectors;
  * @date 2023-09-01
  */
 @Controller
-@RequestMapping("/system/info")
+@RequestMapping("/product/info")
 public class ProdInfoController extends BaseController
 {
-    private String prefix = "system/info";
+    private String prefix = "product/info";
 
     @Autowired
     private IProdInfoService prodInfoService;
@@ -47,7 +47,7 @@ public class ProdInfoController extends BaseController
     @Autowired
     private IBatchInfoService batchInfoService;
 
-    @RequiresPermissions("system:info:view")
+    @RequiresPermissions("product:info:view")
     @GetMapping()
     public String info()
     {
@@ -57,7 +57,7 @@ public class ProdInfoController extends BaseController
     /**
      * 查询产品信息列表
      */
-//    @RequiresPermissions("system:info:list")
+//    @RequiresPermissions("product:info:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(ProdInfo prodInfo)
@@ -81,7 +81,7 @@ public class ProdInfoController extends BaseController
     /**
      * 导出产品信息列表
      */
-    @RequiresPermissions("system:info:export")
+    @RequiresPermissions("product:info:export")
     @Log(title = "产品信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -106,7 +106,7 @@ public class ProdInfoController extends BaseController
     /**
      * 新增保存产品信息
      */
-    @RequiresPermissions("system:info:add")
+    @RequiresPermissions("product:info:add")
     @Log(title = "产品信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -118,7 +118,7 @@ public class ProdInfoController extends BaseController
     /**
      * 修改产品信息
      */
-    @RequiresPermissions("system:info:edit")
+    @RequiresPermissions("product:info:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -130,7 +130,7 @@ public class ProdInfoController extends BaseController
     /**
      * 修改保存产品信息
      */
-    @RequiresPermissions("system:info:edit")
+    @RequiresPermissions("product:info:edit")
     @Log(title = "产品信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -142,7 +142,7 @@ public class ProdInfoController extends BaseController
     /**
      * 删除产品信息
      */
-    @RequiresPermissions("system:info:remove")
+    @RequiresPermissions("product:info:remove")
     @Log(title = "产品信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -158,7 +158,7 @@ public class ProdInfoController extends BaseController
      * @return
      * @throws Exception
      */
-    @RequiresPermissions("system:info:import")
+    @RequiresPermissions("product:info:import")
     @PostMapping("/importData")
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
@@ -180,7 +180,7 @@ public class ProdInfoController extends BaseController
         return AjaxResult.success(message);
     }
 
-    @RequiresPermissions("system:info:view")
+    @RequiresPermissions("product:info:view")
     @GetMapping("/importTemplate")
     @ResponseBody
     public AjaxResult importTemplate()

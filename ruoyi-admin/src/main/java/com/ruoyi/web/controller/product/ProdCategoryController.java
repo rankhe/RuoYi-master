@@ -28,15 +28,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2023-09-01
  */
 @Controller
-@RequestMapping("/system/category")
+@RequestMapping("/product/category")
 public class ProdCategoryController extends BaseController
 {
-    private String prefix = "system/category";
+    private String prefix = "product/category";
 
     @Autowired
     private IProdCategoryService prodCategoryService;
 
-    @RequiresPermissions("system:category:view")
+    @RequiresPermissions("product:category:view")
     @GetMapping()
     public String category()
     {
@@ -46,7 +46,7 @@ public class ProdCategoryController extends BaseController
     /**
      * 查询产品分类列表
      */
-    @RequiresPermissions("system:category:list")
+    @RequiresPermissions("product:category:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(ProdCategory prodCategory)
@@ -63,7 +63,7 @@ public class ProdCategoryController extends BaseController
     /**
      * 导出产品分类列表
      */
-    @RequiresPermissions("system:category:export")
+    @RequiresPermissions("product:category:export")
     @Log(title = "产品分类", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -86,7 +86,7 @@ public class ProdCategoryController extends BaseController
     /**
      * 新增保存产品分类
      */
-    @RequiresPermissions("system:category:add")
+    @RequiresPermissions("product:category:add")
     @Log(title = "产品分类", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -100,7 +100,7 @@ public class ProdCategoryController extends BaseController
     /**
      * 修改产品分类
      */
-    @RequiresPermissions("system:category:edit")
+    @RequiresPermissions("product:category:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -112,7 +112,7 @@ public class ProdCategoryController extends BaseController
     /**
      * 修改保存产品分类
      */
-    @RequiresPermissions("system:category:edit")
+    @RequiresPermissions("product:category:edit")
     @Log(title = "产品分类", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -126,7 +126,7 @@ public class ProdCategoryController extends BaseController
     /**
      * 删除产品分类
      */
-    @RequiresPermissions("system:category:remove")
+    @RequiresPermissions("product:category:remove")
     @Log(title = "产品分类", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody

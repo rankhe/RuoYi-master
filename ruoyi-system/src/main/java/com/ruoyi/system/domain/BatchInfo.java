@@ -30,6 +30,12 @@ public class BatchInfo extends BaseEntity
     @Excel(name = "状态1 正常")
     private Long status;
 
+    @Excel(name = "开始投标时间")
+    private String startTime;
+
+    @Excel(name = "截止投标时间")
+    private String endTime;
+
     /** 已报价人数 */
     @Excel(name = "已报价人数")
     private Long quotation;
@@ -94,17 +100,40 @@ public class BatchInfo extends BaseEntity
         this.remark = remark;
     }
 
+    public String getStartTime()
+    {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime)
+    {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime()
+    {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime)
+    {
+        this.endTime = endTime;
+    }
+
     @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("batchNo", getBatchNo())
-            .append("ownerId", getOwnerId())
-            .append("createTime", getCreateTime())
-            .append("status", getStatus())
-            .append("updateTime", getUpdateTime())
-            .append("quotation", getQuotation())
-            .append("remark", getRemark())
-            .toString();
+    public String toString()
+    {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("id", getId())
+                .append("batchNo", getBatchNo())
+                .append("ownerId", getOwnerId())
+                .append("createTime", getCreateTime())
+                .append("status", getStatus())
+                .append("startTime", getStartTime())
+                .append("endTime", getEndTime())
+                .append("updateTime", getUpdateTime())
+                .append("quotation", getQuotation())
+                .append("remark", getRemark())
+                .toString();
     }
 }

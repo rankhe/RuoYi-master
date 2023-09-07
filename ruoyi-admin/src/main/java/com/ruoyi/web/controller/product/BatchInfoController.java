@@ -29,15 +29,15 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2023-09-01
  */
 @Controller
-@RequestMapping("/system/batch")
+@RequestMapping("/product/batch")
 public class BatchInfoController extends BaseController
 {
-    private String prefix = "system/batch";
+    private String prefix = "product/batch";
 
     @Autowired
     private IBatchInfoService batchInfoService;
 
-    @RequiresPermissions("system:batch:view")
+    @RequiresPermissions("product:batch:view")
     @GetMapping()
     public String info()
     {
@@ -47,7 +47,7 @@ public class BatchInfoController extends BaseController
     /**
      * 查询批次信息列表
      */
-    @RequiresPermissions("system:batch:list")
+    @RequiresPermissions("product:batch:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(BatchInfo batchInfo)
@@ -61,7 +61,7 @@ public class BatchInfoController extends BaseController
     /**
      * 查询指定发布者发布的批次
      */
-//    @RequiresPermissions("system:batch:list")
+//    @RequiresPermissions("product:batch:list")
     @PostMapping("/list/{publish}")
     @ResponseBody
     public List<BatchInfo> list(@PathVariable(value = "publish") Long publish)
@@ -76,7 +76,7 @@ public class BatchInfoController extends BaseController
     /**
      * 导出批次信息列表
      */
-    @RequiresPermissions("system:batch:export")
+    @RequiresPermissions("product:batch:export")
     @Log(title = "批次信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -99,7 +99,7 @@ public class BatchInfoController extends BaseController
     /**
      * 新增保存批次信息
      */
-    @RequiresPermissions("system:batch:add")
+    @RequiresPermissions("product:batch:add")
     @Log(title = "批次信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -115,7 +115,7 @@ public class BatchInfoController extends BaseController
     /**
      * 修改批次信息
      */
-    @RequiresPermissions("system:batch:edit")
+    @RequiresPermissions("product:batch:edit")
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
@@ -127,7 +127,7 @@ public class BatchInfoController extends BaseController
     /**
      * 修改保存批次信息
      */
-    @RequiresPermissions("system:batch:edit")
+    @RequiresPermissions("product:batch:edit")
     @Log(title = "批次信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -139,7 +139,7 @@ public class BatchInfoController extends BaseController
     /**
      * 删除批次信息
      */
-    @RequiresPermissions("system:batch:remove")
+    @RequiresPermissions("product:batch:remove")
     @Log(title = "批次信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
