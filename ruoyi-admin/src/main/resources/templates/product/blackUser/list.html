@@ -28,13 +28,13 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="quotation:blackUser:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="product:blackUser:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="quotation:blackUser:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="product:blackUser:remove">
                     <i class="fa fa-remove"></i> 移出黑名单
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="quotation:blackUser:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="product:blackUser:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -45,8 +45,8 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('quotation:blackUser:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('quotation:blackUser:remove')}]];
+        var editFlag = [[${@permission.hasPermi('product:blackUser:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('product:blackUser:remove')}]];
         var prefix = ctx + "product/blackUser";
 
         $(function() {

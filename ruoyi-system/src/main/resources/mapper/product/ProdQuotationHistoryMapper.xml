@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="quoterUserMobile"    column="quoter_user_mobile"    />
         <result property="ownerUserId"    column="owner_user_id"    />
         <result property="batchId"    column="batch_id"    />
+        <result property="batchNo"    column="batch_no"    />
         <result property="nickName"    column="nick_name"    />
         <result property="count"    column="count"    />
         <result property="price"    column="price"    />
@@ -21,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectProdQuotationHistoryVo">
-        select id, name, prod_id, quoter_user_id,quoter_user_mobile,owner_user_id, batch_id, nick_name, count, price, status, update_time, create_time
+        select id, name, prod_id, quoter_user_id,quoter_user_mobile,owner_user_id, batch_id,batch_no, nick_name, count, price, status, update_time, create_time
         from prod_quotation_history
     </sql>
 
@@ -34,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quoterUserId != null "> and quoter_user_id = #{quoterUserId}</if>
             <if test="ownerUserId != null "> and owner_user_id = #{ownerUserId}</if>
             <if test="batchId != null "> and batch_id = #{batchId}</if>
+            <if test="batchNo != null "> and batch_no = #{batchNo}</if>
             <if test="nickName != null  and nickName != ''"> and nick_name like concat('%', #{nickName}, '%')</if>
             <if test="count != null "> and count = #{count}</if>
             <if test="price != null "> and price = #{price}</if>
@@ -55,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quoterUserMobile != null">quoter_user_mobile,</if>
             <if test="ownerUserId != null">owner_user_id,</if>
             <if test="batchId != null">batch_id,</if>
+            <if test="batchNo != null and batchNo != ''">batch_no,</if>
             <if test="nickName != null">nick_name,</if>
             <if test="count != null">count,</if>
             <if test="price != null">price,</if>
@@ -69,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quoterUserMobile != null and quoterUserMobile != ''">#{quoterUserMobile},</if>
             <if test="ownerUserId != null">#{ownerUserId},</if>
             <if test="batchId != null">#{batchId},</if>
+            <if test="batchNo != null and batchNo != ''">#{batchNo},</if>
             <if test="nickName != null">#{nickName},</if>
             <if test="count != null">#{count},</if>
             <if test="price != null">#{price},</if>
@@ -87,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="quoterUserMobile != null and quoterUserMobile != ''">quoter_user_mobile = #{quoterUserMobile},</if>
             <if test="ownerUserId != null">owner_user_id = #{ownerUserId},</if>
             <if test="batchId != null">batch_id = #{batchId},</if>
+            <if test="batchNo != null">batch_no = #{batchNo},</if>
             <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
             <if test="count != null">count = #{count},</if>
             <if test="price != null">price = #{price},</if>
@@ -111,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="checkProdHistoryUnique" parameterType="ProdQuotationHistory" resultMap="ProdQuotationHistoryResult">
         select id, name, prod_id, quoter_user_id,quoter_user_mobile,owner_user_id, batch_id
             from prod_quotation_history where prod_id=#{prodId}
-                 and  batch_NO=#{batchNO} and status in(1,2) limit 1
+                 and  batch_no=#{batchNo} and status in(1,2) limit 1
     </select>
 
 </mapper>

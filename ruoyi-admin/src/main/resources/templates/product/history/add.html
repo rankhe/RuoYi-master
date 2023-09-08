@@ -7,7 +7,7 @@
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-history-add">
             <div class="form-group">
-                <label class="col-sm-3 control-label  is-required">发布方：</label>
+                <label class="col-sm-3 control-label  is-required">供货发布方：</label>
                 <div class="col-sm-8">
                     <select id="ownerUserId" name="ownerUserId" class="form-control" onchange="loadProdBatch()">
                         <option th:each="publish:${publishes}" th:value="${publish.userId}" th:text="${publish.userName}"></option>
@@ -15,27 +15,29 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label is-required">产品批次ID：</label>
+                <label class="col-sm-3 control-label is-required">产品批次：</label>
                 <div class="col-sm-8">
 <!--                    <input name="batchId" class="form-control" type="text" required>-->
-                    <select id="batchNO" name="batchNO" class="form-control" onchange="loadProdInfo()">
+                    <select id="batchId" name="batchId" class="form-control" onchange="loadProdInfo()">
                     </select>
-
+                    <input name="batchNo" id="batchNo" class="form-control" type="hidden" >
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">产品名称：</label>
+                <label class="col-sm-3 control-label is-required">产品名称/型号：</label>
                 <div class="col-sm-8">
 <!--                    <input name="name" class="form-control" type="text" required>-->
-                    <select id="prodId" name="prodId" class="form-control" required>
+                    <select id="prodId" name="prodId" class="form-control" required onchange="setProdName()">
+
                     </select>
+                    <input name="name" id="name" class="form-control" type="hidden" >
                 </div>
             </div>
 
             <div class="form-group">    
                 <label class="col-sm-3 control-label is-required">报价人手机号：</label>
                 <div class="col-sm-8">
-                    <input name="userId" class="form-control" type="text" required>
+                    <input name="userId" class="form-control" th:value="${phoneNumber}" type="text" required disabled>
                 </div>
             </div>
 
@@ -52,9 +54,9 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">报单价：</label>
+                <label class="col-sm-3 control-label required">报单价：</label>
                 <div class="col-sm-8">
-                    <input name="price" class="form-control" type="text">
+                    <input name="price" class="form-control" type="text" required>
                 </div>
             </div>
         </form>
@@ -69,20 +71,18 @@
         });
         $("#form-history-add").validate({
             onchange: true,
-            ruls: {
+            rules: {
                 prodId: {
-                    // minlength: 2,
-                    // maxlength: 20,
                     remote: {
                         url: prefix + "/checkProdHistoryUnique",
                         type: "post",
                         dataType: "json",
                         data: {
                             "prodId": function () {
-                                return $.common.trim($("#name").val());
+                                return $.common.trim($("#prodId").val());
                             },
-                            "batchNO": function () {
-                                return $.common.trim($("#batchId").val());
+                            "batchNo": function () {
+                                return $.common.trim($("#batchNo").val());
                             }
                         }
                     }
@@ -104,7 +104,6 @@
 
         //加载产品批次
         function loadProdBatch(){
-            console.log("loadProdBatch");
             var publisher = $("#publish").val();
             var pub = $.common.isEmpty(publisher) ? 1: publisher;
             var url = ctx + "product/batch/list/" + pub;
@@ -117,12 +116,19 @@
                     $.modal.loading("正在处理中，请稍候...");
                 },
                 success: function(result) {
-                    var selectElement = $('#batchNO');
+                    var selectElement = $('#batchId');
                     selectElement.empty();
                     // Iterate over the array of objects
                     $.each(result, function(index, value) {
                         var option = $('<option></option>');
-                        option.attr('value', value.batchNo);
+                        if(index ==0)
+                        {
+                            var firstOp = $('<option></option>');
+                            firstOp.attr('value', -1);
+                            firstOp.text("请选择批次");
+                            selectElement.append(firstOp);
+                        }
+                        option.attr('value', value.id);
                         option.text(value.batchNo);
                         selectElement.append(option);
                     });
@@ -130,14 +136,15 @@
                 }
             };
             $.ajax(config);
+
             loadProdInfo();
         }
 
         function loadProdInfo(){
             console.log("loadProdInfo");
-            var batchNO = $("#batchNO").val();
+            var batchNo = $("#batchNo").val();
             var url = ctx + "product/info/list";
-            var data = { "batchId": batchNO };
+            var data = { "batchNo": batchNo };
             var config = {
                 url: url,
                 type: "post",
@@ -150,6 +157,13 @@
                     var selectElement = $('#prodId');
                     selectElement.empty();
                     $.each(result.rows, function(index, value) {
+                        if(index ==0)
+                        {
+                            var firstOp = $('<option></option>');
+                            firstOp.attr('value', -1);
+                            firstOp.text("请选择型号");
+                            selectElement.append(firstOp);
+                        }
                         var option = $('<option></option>');
                         option.attr('value', value.id);
                         option.text(value.name);
@@ -159,6 +173,23 @@
                 }
             };
             $.ajax(config)
+            var batchId = $("#batchId").val();
+            if(batchId != -1)
+            {
+                var batchNumber = $("#batchId option:selected").text();
+                $("#batchNo").val(batchNumber);
+            }
+        }
+
+        function setProdName()
+        {
+            // debugger;
+            var prodId = $("#prodId").val();
+            if(prodId != -1)
+            {
+                var prodName = $("#prodId option:selected").text();
+                $("#name").val(prodName);
+            }
         }
 
     </script>

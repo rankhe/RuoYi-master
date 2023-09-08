@@ -26,6 +26,14 @@ public class ProdQuotationHistory extends BaseEntity
     @Excel(name = "产品分类id")
     private Long prodId;
 
+    /** 产品批次ID */
+    @Excel(name = "产品批次ID")
+    private Long batchId;
+
+    /** 产品批次 */
+    @Excel(name = "产品批次")
+    private String batchNo;
+
     /** 报价人*/
     @Excel(name = "报价人")
     private Long quoterUserId;
@@ -38,13 +46,7 @@ public class ProdQuotationHistory extends BaseEntity
     @Excel(name = "放标人")
     private Long ownerUserId;
 
-    /** 产品批次ID */
-    @Excel(name = "产品批次ID")
-    private Long batchId;
 
-    /** 产品批次ID */
-    @Excel(name = "产品批次NO")
-    private String batchNO;
 
     /** 报价人微信昵称 */
     @Excel(name = "报价人微信昵称")
@@ -90,8 +92,17 @@ public class ProdQuotationHistory extends BaseEntity
         return prodId;
     }
 
+    public String getBatchNo()
+    {
+        return batchNo;
+    }
 
-    public Long getBatchId() 
+    public void setBatchNo(String batchNo)
+    {
+        this.batchNo = batchNo;
+    }
+
+    public Long getBatchId()
     {
         return batchId;
     }
@@ -167,15 +178,6 @@ public class ProdQuotationHistory extends BaseEntity
         this.batchId = batchId;
     }
 
-    public String getBatchNO()
-    {
-        return batchNO;
-    }
-
-    public void setBatchNO(String batchNO)
-    {
-        this.batchNO = batchNO;
-    }
 
     @Override
     public String toString()
@@ -188,6 +190,7 @@ public class ProdQuotationHistory extends BaseEntity
                 .append("ownerUserId", getOwnerUserId())
                 .append("quoterUserMobile", getQuoterUserMobile())
                 .append("batchId", getBatchId())
+                .append("batchNo",getBatchNo())
                 .append("nickName", getNickName())
                 .append("count", getCount())
                 .append("price", getPrice())

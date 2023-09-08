@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.enums.CommonStatus;
 import com.ruoyi.product.domain.ProdCategory;
 import com.ruoyi.product.domain.ProdInfo;
 import com.ruoyi.product.domain.ProdQuotationHistory;
@@ -117,6 +118,7 @@ public class ProdQuotationHistoryController extends BaseController
     {
         List<SysUser> sysUsers = sysUserService.selectUserByRoleId(100l);
         modelMap.put("publishes",sysUsers);
+        modelMap.put("phoneNumber",getSysUser().getPhonenumber());
         return prefix + "/add";
     }
 
@@ -132,6 +134,7 @@ public class ProdQuotationHistoryController extends BaseController
         prodQuotationHistory.setQuoterUserId(getUserId());
         prodQuotationHistory.setCreateTime(Calendar.getInstance().getTime());
         prodQuotationHistory.setCreateBy(getLoginName());
+        prodQuotationHistory.setStatus(CommonStatus.OK.getCode());
         return toAjax(prodQuotationHistoryService.insertProdQuotationHistory(prodQuotationHistory));
     }
 
@@ -268,6 +271,10 @@ public class ProdQuotationHistoryController extends BaseController
     @ResponseBody
     public boolean checkProdHistoryUnique(ProdQuotationHistory history)
     {
+        if(history.getProdId()== -1)
+        {
+            return true;
+        }
         ProdQuotationHistory prodQuotationHistory = prodQuotationHistoryService.checkProdHistoryUnique(history);
         return prodQuotationHistory == null;
     }

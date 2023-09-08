@@ -19,16 +19,24 @@ public class ProdInfo extends BaseEntity
     private Long id;
 
     /** 产品名称 */
-    @Excel(name = "产品名称")
+    @Excel(name = "名称/型号")
     private String name;
+
+    /** 产品名称 */
+    @Excel(name = "品牌")
+    private String brandName;
 
     /** 产品分类id */
     @Excel(name = "产品分类id")
     private Long categoryId;
 
     /** 批次ID */
-    @Excel(name = "批次ID")
+//    @Excel(name = "批次ID")
     private String batchId;
+
+    /** 批次ID */
+    @Excel(name = "批次编号")
+    private String batchNo;
 
     /** 细分类别1数量 */
     @Excel(name = "细分类别1数量")
@@ -171,23 +179,46 @@ public class ProdInfo extends BaseEntity
         return status;
     }
 
+    public String getBrandName()
+    {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName)
+    {
+        this.brandName = brandName;
+    }
+
+    public String getBatchNo()
+    {
+        return batchNo;
+    }
+
+    public void setBatchNo(String batchNo)
+    {
+        this.batchNo = batchNo;
+    }
+
     @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("name", getName())
-            .append("categoryId", getCategoryId())
-            .append("batchId", getBatchId())
-            .append("t1Cnt", getT1Cnt())
-            .append("t2Cnt", getT2Cnt())
-            .append("t3Cnt", getT3Cnt())
-            .append("count", getCount())
-            .append("subtype1", getSubtype1())
-            .append("subtype2", getSubtype2())
-            .append("idx", getIdx())
-            .append("status", getStatus())
-            .append("updateTime", getUpdateTime())
-            .append("createTime", getCreateTime())
-            .toString();
+    public String toString()
+    {
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("id", getId())
+                .append("name", getName())
+                .append("brandName", getBrandName())
+                .append("categoryId", getCategoryId())
+                .append("batchId", getBatchId())
+                .append("batchNo", getBatchNo())
+                .append("t1Cnt", getT1Cnt())
+                .append("t2Cnt", getT2Cnt())
+                .append("t3Cnt", getT3Cnt())
+                .append("count", getCount())
+                .append("subtype1", getSubtype1())
+                .append("subtype2", getSubtype2())
+                .append("idx", getIdx())
+                .append("status", getStatus())
+                .append("updateTime", getUpdateTime())
+                .append("createTime", getCreateTime())
+                .toString();
     }
 }

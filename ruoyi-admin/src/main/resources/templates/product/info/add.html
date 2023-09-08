@@ -96,20 +96,6 @@
                 $.operate.save(prefix + "/add", $('#form-info-add').serialize());
             }
         }
-
-        /* 用户管理-新增-选择部门树 */
-        function selectDeptTree() {
-            var treeId = $("#treeId").val();
-            var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
-            var url = ctx + "system/category/selectDeptTree/" + deptId;
-            var options = {
-                title: '选择部门',
-                width: "380",
-                url: url,
-                callBack: doSubmit
-            };
-            $.modal.openOptions(options);
-        }
     </script>
 </body>
 </html>
