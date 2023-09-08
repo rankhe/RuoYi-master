@@ -11,7 +11,7 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>产品名称：</label>
+                                <label>产品型号：</label>
                                 <input type="text" name="name"/>
                             </li>
 <!--                            <li>-->
@@ -19,7 +19,7 @@
 <!--                                <input type="text" name="prodId"/>-->
 <!--                            </li>-->
                             <li>
-                                <label>产品批次ID：</label>
+                                <label>产品批次：</label>
                                 <input type="text" name="batchId"/>
                             </li>
                             <li>
@@ -44,6 +44,7 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:history:quoter:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <button class="btn btn-primary" onclick="printPage()"><i class="fa fa-print"></i> 打印</button>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -121,6 +122,15 @@
             };
             $.table.init(options);
         });
+        function printPage() {
+            $.table.hideColumn('10');
+            $(".fixed-table-toolbar").hide();
+            $(".fixed-table-pagination").hide();
+            window.print();
+            $(".fixed-table-toolbar").show();
+            $(".fixed-table-pagination").show();
+            $.table.showColumn('10');
+        }
     </script>
 </body>
 </html>

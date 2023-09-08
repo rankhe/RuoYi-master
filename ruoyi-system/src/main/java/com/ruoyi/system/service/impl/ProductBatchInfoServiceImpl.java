@@ -2,7 +2,7 @@ package com.ruoyi.system.service.impl;
 
 //import com.ruoyi.system.domain.ProductBatchInfo;
 //import com.ruoyi.system.mapper.ProductBatchInfoMapper;
-//import com.ruoyi.system.mapper.ProductInfoMapper;
+//import com.ruoyi.product.mapper.ProductInfoMapper;
 //import com.ruoyi.system.service.IProductBatchInfoService;
 //import com.ruoyi.system.service.IProductInfoService;
 //import net.sf.ehcache.util.ProductInfo;

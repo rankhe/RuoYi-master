@@ -3,6 +3,8 @@ package com.ruoyi.web.controller.product;
 import java.util.List;
 
 import com.ruoyi.common.enums.CommonStatus;
+import com.ruoyi.product.domain.QuotationBlackUser;
+import com.ruoyi.product.service.IQuotationBlackUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.QuotationBlackUser;
-import com.ruoyi.system.service.IQuotationBlackUserService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -53,6 +53,7 @@ public class QuotationBlackUserController extends BaseController
     {
         startPage();
         quotationBlackUser.setOwnerUserId(getUserId());
+        quotationBlackUser.setStatus(CommonStatus.OK.getCode().intValue());
         List<QuotationBlackUser> list = quotationBlackUserService.selectQuotationBlackUserList(quotationBlackUser);
         return getDataTable(list);
     }
@@ -67,6 +68,7 @@ public class QuotationBlackUserController extends BaseController
     public AjaxResult export(QuotationBlackUser quotationBlackUser)
     {
         quotationBlackUser.setOwnerUserId(getUserId());
+        quotationBlackUser.setStatus(CommonStatus.OK.getCode().intValue());
         List<QuotationBlackUser> list = quotationBlackUserService.selectQuotationBlackUserList(quotationBlackUser);
         ExcelUtil<QuotationBlackUser> util = new ExcelUtil<QuotationBlackUser>(QuotationBlackUser.class);
         return util.exportExcel(list, "报价黑名单信息数据");
