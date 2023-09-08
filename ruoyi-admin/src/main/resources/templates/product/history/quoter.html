@@ -32,16 +32,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:history:quoter:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="product:history:quoter:add">
                     <i class="fa fa-plus"></i> 发起报价
                 </a>
-<!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:history:quter:edit">-->
+<!--                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="product:history:quter:edit">-->
 <!--                    <i class="fa fa-edit"></i> 修改-->
 <!--                </a>-->
-<!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:history:quoter:remove">-->
+<!--                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="product:history:quoter:remove">-->
 <!--                    <i class="fa fa-remove"></i> 删除-->
 <!--                </a>-->
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:history:quoter:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="product:history:quoter:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
                 <button class="btn btn-primary" onclick="printPage()"><i class="fa fa-print"></i> 打印</button>
@@ -53,8 +53,8 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:history:quoter:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:history:quoter:remove')}]];
+        var editFlag = [[${@permission.hasPermi('product:history:quoter:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('product:history:quoter:remove')}]];
         var prefix = ctx + "product/history/";
         var staData = [[${@dict.getType('pro_qutation_sta')}]];
 

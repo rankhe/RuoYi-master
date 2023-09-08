@@ -24,16 +24,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:category:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="product:category:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:category:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="product:category:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:category:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="product:category:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:category:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="product:category:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -44,8 +44,8 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:category:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:category:remove')}]];
+        var editFlag = [[${@permission.hasPermi('product:category:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('product:category:remove')}]];
         var prefix = ctx + "product/category";
         var staData = [[${@dict.getType('common_status')}]];
         $(function() {
