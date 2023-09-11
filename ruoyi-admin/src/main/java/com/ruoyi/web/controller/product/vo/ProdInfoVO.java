@@ -10,24 +10,23 @@ import java.util.Date;
 @Data
 public class ProdInfoVO implements Serializable
 {
-    /** $column.columnComment */
+
     private Long id;
 
     /** 产品名称 */
+    @Excel(name = "品牌")
+    private String brandName;
+
     @Excel(name = "产品名称")
     private String name;
 
-    /** 产品分类id */
-    @Excel(name = "产品分类id")
-    private Long categoryId;
-
     /** 产品名称 */
     @Excel(name = "产品类别")
-    private String prodCategory;
+    private String categoryName;
 
     /** 批次ID */
     @Excel(name = "批次ID")
-    private String batchId;
+    private String batchNo;
 
     /** 细分类别1数量 */
     @Excel(name = "细分类别1数量")
@@ -53,11 +52,6 @@ public class ProdInfoVO implements Serializable
     @Excel(name = "细分类别2")
     private String subtype2;
 
-    /** 展示顺序 */
-    @Excel(name = "展示顺序")
-    private Long idx;
-
-    /** 状态1 正常 */
     @Excel(name = "状态1 正常")
     private Long status;
 

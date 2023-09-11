@@ -3,8 +3,8 @@ package com.ruoyi.product.service.impl;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.product.domain.ProdQuotationHistory;
-import com.ruoyi.product.service.IProdQuotationHistoryService;
 import com.ruoyi.product.mapper.ProdQuotationHistoryMapper;
+import com.ruoyi.product.service.IProdQuotationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,4 +100,6 @@ public class ProdQuotationHistoryServiceImpl implements IProdQuotationHistorySer
     {
         return prodQuotationHistoryMapper.checkProdHistoryUnique(history);
     }
+
+
 }

@@ -86,11 +86,26 @@
                             }
                         }
                     }
-                }
+                },
+                ownerUserId: {
+                    remote: {
+                        url: prefix + "/checkQuotationBlackUser",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "ownerUserId": function () {
+                                return $.common.trim($("#ownerUserId").val());
+                            }
+                        }
+                    }
+                },
             },
             messages: {
                 "prodId": {
                     remote: "该商品您已经报过价了"
+                },
+                "ownerUserId": {
+                    remote: "当前供货商把你加入了黑名单，无法报价"
                 }
             },
             focusCleanup: true

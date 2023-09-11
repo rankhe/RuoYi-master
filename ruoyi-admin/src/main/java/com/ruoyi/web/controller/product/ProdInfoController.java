@@ -12,6 +12,7 @@ import com.ruoyi.product.domain.ProdInfo;
 import com.ruoyi.product.service.IBatchInfoService;
 import com.ruoyi.product.service.IProdCategoryService;
 import com.ruoyi.product.service.IProdInfoService;
+import com.ruoyi.web.controller.product.vo.ProdInfoExcelVO1;
 import com.ruoyi.web.controller.product.vo.ProdInfoVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -67,12 +68,12 @@ public class ProdInfoController extends BaseController
         List<ProdInfoVO> result = list.stream().map(i -> {
             ProdInfoVO vo = new ProdInfoVO();
             BeanUtils.copyProperties(i, vo);
-            final Long categoryId = i.getCategoryId();
-            final ProdCategory prodCategory = prodCategoryService.selectProdCategoryById(categoryId);
-            if(prodCategory != null)
-            {
-                vo.setProdCategory(prodCategory.getName());
-            }
+//            final Long categoryId = i.getCategoryId();
+//            final ProdCategory prodCategory = prodCategoryService.selectProdCategoryById(categoryId);
+//            if(prodCategory != null)
+//            {
+//                vo.setProdCategory(prodCategory.getName());
+//            }
             return vo;
         }).collect(Collectors.toList());
         return getDataTable(result);
@@ -163,8 +164,8 @@ public class ProdInfoController extends BaseController
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {
-        ExcelUtil<ProdInfoVO> util = new ExcelUtil<ProdInfoVO>(ProdInfoVO.class);
-        List<ProdInfoVO> prodInfoVOS = util.importExcel(file.getInputStream());
+        ExcelUtil<ProdInfoExcelVO1> util = new ExcelUtil<ProdInfoExcelVO1>(ProdInfoExcelVO1.class);
+        List<ProdInfoExcelVO1> prodInfoVOS = util.importExcel(file.getInputStream());
 
         List<ProdInfo> prodInfoList =  new ArrayList<>();
         if(!CollectionUtils.isEmpty(prodInfoVOS))
@@ -185,7 +186,7 @@ public class ProdInfoController extends BaseController
     @ResponseBody
     public AjaxResult importTemplate()
     {
-        ExcelUtil<ProdInfoVO> util = new ExcelUtil<ProdInfoVO>(ProdInfoVO.class);
+        ExcelUtil<ProdInfoExcelVO1> util = new ExcelUtil<ProdInfoExcelVO1>(ProdInfoExcelVO1.class);
         return util.importTemplateExcel("产品数据");
     }
 }

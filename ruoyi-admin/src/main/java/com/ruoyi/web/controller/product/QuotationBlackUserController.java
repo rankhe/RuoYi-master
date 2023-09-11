@@ -2,9 +2,12 @@ package com.ruoyi.web.controller.product;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.CommonStatus;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.product.domain.QuotationBlackUser;
 import com.ruoyi.product.service.IQuotationBlackUserService;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +38,9 @@ public class QuotationBlackUserController extends BaseController
 
     @Autowired
     private IQuotationBlackUserService quotationBlackUserService;
+
+    @Autowired
+    private ISysUserService sysUserService;
 
     @RequiresPermissions("product:blackUser:view")
     @GetMapping()
@@ -87,12 +93,34 @@ public class QuotationBlackUserController extends BaseController
      * 新增保存报价黑名单信息
      */
     @RequiresPermissions("product:blackUser:add")
-    @Log(title = "报价黑名单信息", businessType = BusinessType.INSERT)
+    @Log(title = "添加报价黑名单", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(QuotationBlackUser quotationBlackUser)
     {
+        if(quotationBlackUser == null || (quotationBlackUser.getUserId()==null && StringUtils.isEmpty(quotationBlackUser.getMobile())))
+        return error("缺少必要参数");
+        SysUser user = null;
+
+        if(StringUtils.isNotEmpty(quotationBlackUser.getMobile()))
+        {
+            user = sysUserService.selectUserByPhoneNumber(quotationBlackUser.getMobile());
+        }
+        if(user == null && quotationBlackUser.getUserId() != null)
+        {
+            user = sysUserService.selectUserById(quotationBlackUser.getUserId());
+        }
+        if(user == null)
+        {
+            return error("系统找不到对用的用户");
+        }
+        if(!quotationBlackUserService.checkQuotationBlackUser(user.getUserId(),getUserId()))
+        {
+            return error("该用户已经在黑名单列表");
+        }
+        quotationBlackUser.setUserId(user.getUserId());
         quotationBlackUser.setOwnerUserId(getUserId());
+        quotationBlackUser.setMobile(user.getPhonenumber());
         quotationBlackUser.setStatus(CommonStatus.OK.getCode().intValue());
         return toAjax(quotationBlackUserService.insertQuotationBlackUser(quotationBlackUser));
     }

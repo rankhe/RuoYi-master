@@ -13,6 +13,7 @@ import com.ruoyi.product.domain.ProdQuotationHistory;
 import com.ruoyi.product.service.IProdCategoryService;
 import com.ruoyi.product.service.IProdInfoService;
 import com.ruoyi.product.service.IProdQuotationHistoryService;
+import com.ruoyi.product.service.IQuotationBlackUserService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.web.controller.product.vo.MyProdQuotationExportVO;
 import com.ruoyi.web.controller.product.vo.ProdQuotationHistoryVO;
@@ -44,6 +45,9 @@ public class ProdQuotationHistoryController extends BaseController
 
     @Autowired
     private IProdQuotationHistoryService prodQuotationHistoryService;
+
+    @Autowired
+    private IQuotationBlackUserService quotationBlackUserService;
 
     @Autowired
     private IProdInfoService prodInfoService;
@@ -131,6 +135,10 @@ public class ProdQuotationHistoryController extends BaseController
     @ResponseBody
     public AjaxResult addSave(ProdQuotationHistory prodQuotationHistory)
     {
+        if(!quotationBlackUserService.checkQuotationBlackUser(getUserId(), prodQuotationHistory.getOwnerUserId()))
+        {
+            return error("商家把你加入了黑名单无法报价");
+        }
         prodQuotationHistory.setQuoterUserId(getUserId());
         prodQuotationHistory.setCreateTime(Calendar.getInstance().getTime());
         prodQuotationHistory.setCreateBy(getLoginName());
@@ -277,5 +285,17 @@ public class ProdQuotationHistoryController extends BaseController
         }
         ProdQuotationHistory prodQuotationHistory = prodQuotationHistoryService.checkProdHistoryUnique(history);
         return prodQuotationHistory == null;
+    }
+
+    @Log(title = "校验报价人是否在黑名单", businessType = BusinessType.OTHER)
+    @PostMapping( "/checkQuotationBlackUser")
+    @ResponseBody
+    public boolean checkQuotationBlackUser(Long ownerUserId)
+    {
+        if(ownerUserId == null || ownerUserId == -1)
+        {
+            return true;
+        }
+        return quotationBlackUserService.checkQuotationBlackUser(getUserId(),ownerUserId);
     }
 }

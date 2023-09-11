@@ -30,6 +30,9 @@ public class ProdInfo extends BaseEntity
     @Excel(name = "产品分类id")
     private Long categoryId;
 
+    @Excel(name = "分类")
+    private String categoryName;
+
     /** 批次ID */
 //    @Excel(name = "批次ID")
     private String batchId;
@@ -199,6 +202,16 @@ public class ProdInfo extends BaseEntity
         this.batchNo = batchNo;
     }
 
+    public String getCategoryName()
+    {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName)
+    {
+        this.categoryName = categoryName;
+    }
+
     @Override
     public String toString()
     {
@@ -206,6 +219,7 @@ public class ProdInfo extends BaseEntity
                 .append("id", getId())
                 .append("name", getName())
                 .append("brandName", getBrandName())
+                .append("categoryName",getCategoryName())
                 .append("categoryId", getCategoryId())
                 .append("batchId", getBatchId())
                 .append("batchNo", getBatchNo())

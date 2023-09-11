@@ -61,4 +61,5 @@ public interface IProdQuotationHistoryService
     public int deleteProdQuotationHistoryById(Long id);
 
     ProdQuotationHistory checkProdHistoryUnique(ProdQuotationHistory history);
+
 }

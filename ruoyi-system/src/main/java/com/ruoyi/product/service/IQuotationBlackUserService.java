@@ -59,4 +59,12 @@ public interface IQuotationBlackUserService
      * @return 结果
      */
     public int deleteQuotationBlackUserById(Long id);
+
+    /**
+     * 检查当前用户是否不在某个供应商的黑名单
+     * @param userId
+     * @param ownerUserId
+     * @return
+     */
+    Boolean checkQuotationBlackUser(Long userId, Long ownerUserId);
 }

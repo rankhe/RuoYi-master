@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="bradName"    column="brand_name"    />
         <result property="categoryId"    column="category_id"    />
+        <result property="categoryName"    column="categoryName"    />
         <result property="batchId"    column="batch_id"    />
         <result property="batchNo"    column="batch_no"    />
         <result property="t1Cnt"    column="t1_cnt"    />
@@ -24,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectProdInfoVo">
-        select id, name,brand_name, category_id, batch_id,batch_no, t1_cnt, t2_cnt, t3_cnt, count, subtype1, subtype2, idx, status, update_time, create_time from prod_info
+        select id, name,brand_name, category_id,category_name, batch_id,batch_no, t1_cnt, t2_cnt, t3_cnt, count, subtype1, subtype2, idx, status, update_time, create_time from prod_info
     </sql>
 
     <select id="selectProdInfoList" parameterType="ProdInfo" resultMap="ProdInfoResult">
@@ -33,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="brandName != null  and bradName != ''"> and brand_name like concat('%', #{bradName}, '%')</if>
             <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="categoryName != null and categoryName != ''"> and category_name = #{categoryName}</if>
             <if test="batchId != null  and batchId != ''"> and batch_id = #{batchId}</if>
             <if test="batchNo != null  and batchNo != ''"> and batch_no = #{batchNo}</if>
             <if test="t1Cnt != null "> and t1_cnt = #{t1Cnt}</if>
@@ -57,7 +59,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null and name != ''">name,</if>
             <if test="brandName != null and brandName != ''">brand_name,</if>
             <if test="categoryId != null">category_id,</if>
-            <if test="batchId != null and batchId != ''">batch_id,</if>
+            <if test="categoryName != null and categoryName != ''">category_name,</if>
+            <if test="batchId != null">batch_id,</if>
             <if test="batchNo != null and batchNo != ''">batch_no,</if>
             <if test="t1Cnt != null">t1_cnt,</if>
             <if test="t2Cnt != null">t2_cnt,</if>
@@ -74,7 +77,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null and name != ''">#{name},</if>
             <if test="brandName != null and brandName != ''">#{brandName},</if>
             <if test="categoryId != null">#{categoryId},</if>
-            <if test="batchId != null and batchId != ''">#{batchId},</if>
+            <if test="categoryName != null and categoryName != ''">#{categoryName},</if>
+            <if test="batchId != null">#{batchId},</if>
             <if test="batchNo != null and batchNo != ''">#{batchNo},</if>
             <if test="t1Cnt != null">#{t1Cnt},</if>
             <if test="t2Cnt != null">#{t2Cnt},</if>
@@ -95,7 +99,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="brandName != null and brandName != ''">brand_name = #{brandName},</if>
             <if test="categoryId != null">category_id = #{categoryId},</if>
-            <if test="batchId != null and batchId != ''">batch_id = #{batchId},</if>
+            <if test="categoryName != null and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="batchId != null">batch_id = #{batchId},</if>
             <if test="batchNo != null and batchNo != ''">batch_no = #{batchNo},</if>
             <if test="t1Cnt != null">t1_cnt = #{t1Cnt},</if>
             <if test="t2Cnt != null">t2_cnt = #{t2Cnt},</if>

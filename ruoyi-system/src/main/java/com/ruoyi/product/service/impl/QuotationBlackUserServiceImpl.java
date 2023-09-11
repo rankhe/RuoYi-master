@@ -8,6 +8,7 @@ import com.ruoyi.product.service.IQuotationBlackUserService;
 import com.ruoyi.product.mapper.QuotationBlackUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -107,5 +108,17 @@ public class QuotationBlackUserServiceImpl implements IQuotationBlackUserService
          QuotationBlackUser quotationBlackUser = quotationBlackUserMapper.selectQuotationBlackUserById(id);
          quotationBlackUser.setStatus(CommonStatus.DEFAULT.getCode().intValue());
          this.updateQuotationBlackUser(quotationBlackUser);        return quotationBlackUserMapper.deleteQuotationBlackUserById(id);
+    }
+
+    @Override
+    public Boolean checkQuotationBlackUser(Long userId, Long ownerUserId)
+    {
+        QuotationBlackUser quotationBlackUser = new QuotationBlackUser();
+        quotationBlackUser.setOwnerUserId(ownerUserId);
+        quotationBlackUser.setUserId(userId);
+        quotationBlackUser.setStatus(CommonStatus.OK.getCode().intValue());
+        List<QuotationBlackUser> quotationBlackUsers = quotationBlackUserMapper.selectQuotationBlackUserList(
+                quotationBlackUser);
+        return CollectionUtils.isEmpty(quotationBlackUsers);
     }
 }
