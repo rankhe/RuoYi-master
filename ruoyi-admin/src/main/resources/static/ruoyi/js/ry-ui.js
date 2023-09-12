@@ -1169,6 +1169,24 @@ var table = {
                     }
                 });
             },
+
+            // 更新状态
+            sendNotice: function(id,msg) {
+                table.set();
+                if(!msg){
+                    msg = "确定给"+msg+"发送中标提醒吗？";
+                }
+                $.modal.confirm(msg, function() {
+                    alert('提醒功能尚未实现')
+                    // var url = $.common.isEmpty(id) ? table.options.updateStatusUrl : table.options.updateStatusUrl+"?id="+id;
+                    // if (table.options.type == table_type.bootstrapTreeTable) {
+                    //     $.operate.put(url);
+                    // } else {
+                    //     var data = { "ids": id };
+                    //     $.operate.submit(url, "post", "json", data);
+                    // }
+                });
+            },
             // 修改信息，以tab页展现
             editTab: function(id) {
                 table.set();

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -113,12 +114,14 @@ public class ProdInfoServiceImpl implements IProdInfoService
                             ProdInfo condition = new ProdInfo();
                             condition.setBatchId(p.getBatchId());
                             condition.setName(p.getName());
+                            condition.setCategoryId(p.getCategoryId());
                             List<ProdInfo> prodInfoList1 = prodInfoMapper.selectProdInfoList(condition);
                             if(!CollectionUtils.isEmpty(prodInfoList1))
                             {
                                 ProdInfo originProd = prodInfoList1.get(0);
                                 BeanUtils.copyProperties(p,originProd);
                                 originProd.setUpdateBy(operName);
+                                originProd.setUpdateTime(new Date());
                                 prodInfoMapper.updateProdInfo(originProd);
                             }
                         }

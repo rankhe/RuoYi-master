@@ -48,6 +48,7 @@
         var removeFlag = [[${@permission.hasPermi('product:category:remove')}]];
         var prefix = ctx + "product/category";
         var staData = [[${@dict.getType('common_status')}]];
+        var levelData = [[${@dict.getType('category_level')}]];
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -69,9 +70,20 @@
                     title: '分类名称'
                 },
                 {
-                    field: 'idx',
-                    title: '展示顺序'
+                    field: 'level',
+                    title: '分类等级',
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(levelData, item.level);
+                    }
                 },
+                {
+                    field: 'parentId',
+                    title: '父级分类ID'
+                },
+                // {
+                //     field: 'idx',
+                //     title: '展示顺序'
+                // },
                 {
                     field: 'status',
                     title: '分类状态',

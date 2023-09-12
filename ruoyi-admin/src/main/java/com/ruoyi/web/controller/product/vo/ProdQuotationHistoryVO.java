@@ -23,21 +23,13 @@ public class ProdQuotationHistoryVO implements Serializable
     @Excel(name = "产品类别")
     private String prodCategory;
 
-    /** 产品名称 */
-    @Excel(name = "产品子类别1")
-    private String subCategory1;
-
-    /** 产品名称 */
-    @Excel(name = "产品子类别2")
-    private String subCategory2;
-
     /** 报价人手机号 */
     @Excel(name = "报价人手机号")
-    private Long userId;
+    private Long quoterUserMobile;
 
     /** 产品批次ID */
     @Excel(name = "产品批次ID")
-    private Long batchId;
+    private String batchNo;
 
     /** 报价人微信昵称 */
     @Excel(name = "报价人微信昵称")

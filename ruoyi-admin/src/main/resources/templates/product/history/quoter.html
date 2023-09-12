@@ -75,8 +75,8 @@
                     visible: false
                 },
                 {
-                    field: 'batchId',
-                    title: '产品批次ID'
+                    field: 'batchNo',
+                    title: '产品批次'
                 },
                 {
                     field: 'name',
@@ -87,16 +87,8 @@
                     title: '产品分类'
                 },
                 {
-                    field: 'subCategory1',
-                    title: '细分类别1'
-                },
-                {
-                    field: 'subCategory2',
-                    title: '细分类别2'
-                },
-                {
                     field: 'count',
-                    title: '意向数量'
+                    title: '数量'
                 },
                 {
                     field: 'price',
@@ -123,13 +115,13 @@
             $.table.init(options);
         });
         function printPage() {
-            $.table.hideColumn('10');
+            $.table.hideColumn('8');
             $(".fixed-table-toolbar").hide();
             $(".fixed-table-pagination").hide();
             window.print();
             $(".fixed-table-toolbar").show();
             $(".fixed-table-pagination").show();
-            $.table.showColumn('10');
+            $.table.showColumn('8');
         }
     </script>
 </body>

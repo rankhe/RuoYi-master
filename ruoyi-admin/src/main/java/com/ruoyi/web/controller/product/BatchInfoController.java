@@ -1,7 +1,9 @@
 package com.ruoyi.web.controller.product;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ruoyi.common.enums.CommonStatus;
 import com.ruoyi.product.domain.BatchInfo;
@@ -10,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +57,7 @@ public class BatchInfoController extends BaseController
     {
         startPage();
         batchInfo.setStatus(CommonStatus.OK.getCode());
+        batchInfo.setOwnerId(getUserId());
         List<BatchInfo> list = batchInfoService.selectBatchInfoList(batchInfo);
         return getDataTable(list);
     }
@@ -71,6 +75,11 @@ public class BatchInfoController extends BaseController
         BatchInfo batchInfo = new  BatchInfo();
         batchInfo.setOwnerId(publish);
         List<BatchInfo> list = batchInfoService.selectBatchInfoList(batchInfo);
+        if(!CollectionUtils.isEmpty(list))
+        {
+            list = list.stream().filter(i -> i.getEndTime().compareTo(LocalDateTime.now())>0)
+                    .collect(Collectors.toList());
+        }
         return list;
     }
     /**

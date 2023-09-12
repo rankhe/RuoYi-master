@@ -26,6 +26,15 @@ public class ProdCategory extends BaseEntity
     @Excel(name = "展示顺序")
     private Long idx;
 
+    @Excel(name = "分类的等级")
+    private Integer level;
+
+    @Excel(name = "父级分类ID")
+    private Long parentId;
+
+    @Excel(name = "所有者ID")
+    private Long ownerUserId;
+
     /** 分类状态1 有效 */
     @Excel(name = "分类状态")
     private Long status = 1l;
@@ -93,17 +102,50 @@ public class ProdCategory extends BaseEntity
         return updator;
     }
 
+    public Integer getLevel()
+    {
+        return level;
+    }
+
+    public void setLevel(Integer level)
+    {
+        this.level = level;
+    }
+
+    public Long getParentId()
+    {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId)
+    {
+        this.parentId = parentId;
+    }
+
+    public Long getOwnerUserId()
+    {
+        return ownerUserId;
+    }
+
+    public void setOwnerUserId(Long ownerUserId)
+    {
+        this.ownerUserId = ownerUserId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("name", getName())
-            .append("idx", getIdx())
-            .append("status", getStatus())
-            .append("updateTime", getUpdateTime())
-            .append("createTime", getCreateTime())
-            .append("creator", getCreator())
-            .append("updator", getUpdator())
-            .toString();
+                .append("id", getId())
+                .append("name", getName())
+                .append("level", getLevel())
+                .append("parentId", getParentId())
+                .append("ownerUserId",getOwnerUserId())
+                .append("idx", getIdx())
+                .append("status", getStatus())
+                .append("updateTime", getUpdateTime())
+                .append("createTime", getCreateTime())
+                .append("creator", getCreator())
+                .append("updator", getUpdator())
+                .toString();
     }
 }

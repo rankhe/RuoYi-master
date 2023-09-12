@@ -62,6 +62,12 @@
                 <a class="btn btn-info" onclick="$.table.showColumn('brandName')">
                     <i class="fa fa-close"></i> 显示品牌
                 </a>
+                <a class="btn btn-info" onclick="$.table.hideColumn('categoryName')">
+                    <i class="fa fa-close"></i> 隐藏分类
+                </a>
+                <a class="btn btn-info" onclick="$.table.showColumn('categoryName')">
+                    <i class="fa fa-close"></i> 显示分类
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -93,6 +99,10 @@
                     visible: false
                 },
                 {
+                    field: 'batchNo',
+                    title: '所属批号'
+                },
+                {
                     field: 'brandName',
                     title: '品牌'
                 },
@@ -101,8 +111,8 @@
                     title: '名称/型号'
                 },
                 {
-                    field: 'batchNo',
-                    title: '所属批号'
+                    field: 'categoryName',
+                    title: '产品分类'
                 },
                 {
                     field: 'count',
@@ -112,26 +122,23 @@
                 //     field: 'categoryId',
                 //     title: '产品分类id'
                 // },
-                {
-                    field: 'categoryName',
-                    title: '产品分类'
-                },
-                {
-                    field: 'subtype1',
-                    title: '细分类别1'
-                },
-                {
-                    field: 't1Cnt',
-                    title: '细分类别1数量'
-                },
-                {
-                    field: 'subtype2',
-                    title: '细分类别2'
-                },
-                {
-                    field: 't2Cnt',
-                    title: '细分类别2数量'
-                },
+
+                // {
+                //     field: 'subtype1',
+                //     title: '细分类别1'
+                // },
+                // {
+                //     field: 't1Cnt',
+                //     title: '细分类别1数量'
+                // },
+                // {
+                //     field: 'subtype2',
+                //     title: '细分类别2'
+                // },
+                // {
+                //     field: 't2Cnt',
+                //     title: '细分类别2数量'
+                // },
 
                 {
                     field: 'createTime',

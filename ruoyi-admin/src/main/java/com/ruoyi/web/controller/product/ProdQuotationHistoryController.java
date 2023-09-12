@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.CommonStatus;
+import com.ruoyi.product.domain.BatchInfo;
 import com.ruoyi.product.domain.ProdCategory;
 import com.ruoyi.product.domain.ProdInfo;
 import com.ruoyi.product.domain.ProdQuotationHistory;
@@ -74,25 +75,22 @@ public class ProdQuotationHistoryController extends BaseController
     public TableDataInfo list(ProdQuotationHistory prodQuotationHistory)
     {
         startPage();
-
         prodQuotationHistory.setOwnerUserId(getUserId());
         List<ProdQuotationHistory> list = prodQuotationHistoryService.selectProdQuotationHistoryList(prodQuotationHistory);
-        List<ProdQuotationHistoryVO> result = list.stream().map(i->{
-            ProdQuotationHistoryVO vo  =new  ProdQuotationHistoryVO();
-            BeanUtils.copyProperties(i,vo);
-             ProdInfo prodInfo = prodInfoService.selectProdInfoById(i.getProdId());
-             if(prodInfo!= null)
-             {
-                 final Long categoryId = prodInfo.getCategoryId();
-                 final ProdCategory prodCategory = prodCategoryService.selectProdCategoryById(categoryId);
-                 if(prodCategory!=null)
-                 {
-                     vo.setProdCategory(prodCategory.getName());
-                 }
-                 vo.setSubCategory1(prodInfo.getSubtype1());
-                 vo.setSubCategory2(prodInfo.getSubtype2());
-             }
-             return vo;
+        List<ProdQuotationHistoryVO> result = list.stream().map(i -> {
+            ProdQuotationHistoryVO vo = new ProdQuotationHistoryVO();
+            BeanUtils.copyProperties(i, vo);
+            ProdInfo prodInfo = prodInfoService.selectProdInfoById(i.getProdId());
+            if(prodInfo != null)
+            {
+                final Long categoryId = prodInfo.getCategoryId();
+                final ProdCategory prodCategory = prodCategoryService.selectProdCategoryById(categoryId);
+                if(prodCategory != null)
+                {
+                    vo.setProdCategory(prodCategory.getName());
+                }
+            }
+            return vo;
         }).collect(Collectors.toList());
         return getDataTable(result);
     }
@@ -141,6 +139,7 @@ public class ProdQuotationHistoryController extends BaseController
         }
         prodQuotationHistory.setQuoterUserId(getUserId());
         prodQuotationHistory.setCreateTime(Calendar.getInstance().getTime());
+        prodQuotationHistory.setName(prodQuotationHistory.getName().split("-")[0]);
         prodQuotationHistory.setCreateBy(getLoginName());
         prodQuotationHistory.setStatus(CommonStatus.OK.getCode());
         return toAjax(prodQuotationHistoryService.insertProdQuotationHistory(prodQuotationHistory));
@@ -228,8 +227,6 @@ public class ProdQuotationHistoryController extends BaseController
                 {
                     vo.setProdCategory(prodCategory.getName());
                 }
-                vo.setSubCategory1(prodInfo.getSubtype1());
-                vo.setSubCategory2(prodInfo.getSubtype2());
             }
             return vo;
         }).collect(Collectors.toList());

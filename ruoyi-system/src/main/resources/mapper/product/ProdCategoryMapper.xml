@@ -7,6 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="ProdCategory" id="ProdCategoryResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
+        <result property="level"    column="level"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="ownerUserId"    column="owner_user_id"    />
         <result property="idx"    column="idx"    />
         <result property="status"    column="status"    />
         <result property="updateTime"    column="update_time"    />
@@ -16,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectProdCategoryVo">
-        select id, name, idx, status, update_time, create_time, creator, updator from prod_category
+        select id, name,level,parent_id, owner_user_id,idx, status, update_time, create_time, creator, updator from prod_category
     </sql>
 
     <select id="selectCategoryAll" resultMap="ProdCategoryResult">
@@ -28,7 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="idx != null "> and idx = #{idx}</if>
+            <if test="level != null "> and level = #{level}</if>
+            <if test="ownerUserId != null "> and owner_user_id = #{ownerUserId}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
             <if test="status != null "> and status = #{status}</if>
+
             <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
             <if test="updator != null  and updator != ''"> and updator = #{updator}</if>
         </where>
@@ -44,6 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">name,</if>
             <if test="idx != null">idx,</if>
+            <if test="level != null">level,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="ownerUserId != null">owner_user_id,</if>
             <if test="status != null">status,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="createTime != null">create_time,</if>
@@ -53,6 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
             <if test="idx != null">#{idx},</if>
+            <if test="level != null">#{level},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="ownerUserId != null">#{ownerUserId},</if>
             <if test="status != null">#{status},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -66,6 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="idx != null">idx = #{idx},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="ownerUserId != null">owner_user_id = #{ownerUserId},</if>
             <if test="status != null">status = #{status},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="createTime != null">create_time = #{createTime},</if>

@@ -2,7 +2,9 @@ package com.ruoyi.product.service.impl;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.product.domain.BatchInfo;
 import com.ruoyi.product.domain.ProdQuotationHistory;
+import com.ruoyi.product.mapper.BatchInfoMapper;
 import com.ruoyi.product.mapper.ProdQuotationHistoryMapper;
 import com.ruoyi.product.service.IProdQuotationHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ProdQuotationHistoryServiceImpl implements IProdQuotationHistorySer
 {
     @Autowired
     private ProdQuotationHistoryMapper prodQuotationHistoryMapper;
+
+    @Autowired
+    private BatchInfoMapper batchInfoMapper;
 
     /**
      * 查询产品报价信息
@@ -56,7 +61,17 @@ public class ProdQuotationHistoryServiceImpl implements IProdQuotationHistorySer
     public int insertProdQuotationHistory(ProdQuotationHistory prodQuotationHistory)
     {
         prodQuotationHistory.setCreateTime(DateUtils.getNowDate());
-        return prodQuotationHistoryMapper.insertProdQuotationHistory(prodQuotationHistory);
+        Integer result = prodQuotationHistoryMapper.insertProdQuotationHistory(prodQuotationHistory);
+        if(prodQuotationHistory.getBatchId() != null)
+        {
+            BatchInfo batchInfo = batchInfoMapper.selectBatchInfoById(prodQuotationHistory.getBatchId());
+            if(batchInfo != null)
+            {
+                batchInfo.setQuotation(batchInfo.getQuotation() + 1);
+                batchInfoMapper.updateBatchInfo(batchInfo);
+            }
+        }
+        return result;
     }
 
     /**

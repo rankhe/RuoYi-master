@@ -1,9 +1,14 @@
 package com.ruoyi.product.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 批次信息对象 batch_info
@@ -31,10 +36,14 @@ public class BatchInfo extends BaseEntity
     private Long status;
 
     @Excel(name = "开始投标时间")
-    private String startTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime startTime;
 
     @Excel(name = "截止投标时间")
-    private String endTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime endTime;
 
     /** 已报价人数 */
     @Excel(name = "已报价人数")
@@ -100,22 +109,22 @@ public class BatchInfo extends BaseEntity
         this.remark = remark;
     }
 
-    public String getStartTime()
+    public LocalDateTime getStartTime()
     {
         return startTime;
     }
 
-    public void setStartTime(String startTime)
+    public void setStartTime(LocalDateTime startTime)
     {
         this.startTime = startTime;
     }
 
-    public String getEndTime()
+    public LocalDateTime getEndTime()
     {
         return endTime;
     }
 
-    public void setEndTime(String endTime)
+    public void setEndTime(LocalDateTime endTime)
     {
         this.endTime = endTime;
     }

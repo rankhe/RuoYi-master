@@ -7,9 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="ProdInfo" id="ProdInfoResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
-        <result property="bradName"    column="brand_name"    />
+        <result property="brandName"    column="brand_name"    />
         <result property="categoryId"    column="category_id"    />
-        <result property="categoryName"    column="categoryName"    />
+        <result property="categoryName"    column="category_name"    />
         <result property="batchId"    column="batch_id"    />
         <result property="batchNo"    column="batch_no"    />
         <result property="t1Cnt"    column="t1_cnt"    />

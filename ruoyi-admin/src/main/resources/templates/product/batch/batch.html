@@ -47,6 +47,7 @@
         </div>
     </div>
     <th:block th:include="include :: footer" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('product:batch:edit')}]];
         var removeFlag = [[${@permission.hasPermi('product:batch:remove')}]];
@@ -86,7 +87,11 @@
                 },
                 {
                     field: 'endTime',
-                    title: '投标截止时间'
+                    title: '投标截止时间',
+                    formatter:function(date)
+                    {
+                        return moment(date).format("YYYY-MM-DD HH:mm:ss");
+                    }
                 },
                 {
                     field: 'quotation',

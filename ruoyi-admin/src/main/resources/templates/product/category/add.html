@@ -12,24 +12,31 @@
                     <input name="name" class="form-control" type="text" required>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">分类等级：</label>
+                <div class="col-sm-8">
+                    <select id="level" name="level" class="form-control" onchange="loadFirstLevel()">
+                        <option value="1">第一级</option>
+                        <option value="2">第二级</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">父级分类：</label>
+                <div class="col-sm-8">
+                    <select id="parentId" name="parentId" class="form-control">
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group">    
                 <label class="col-sm-3 control-label">展示顺序：</label>
                 <div class="col-sm-8">
                     <input name="idx" class="form-control" type="text">
                 </div>
             </div>
-<!--            <div class="form-group">    -->
-<!--                <label class="col-sm-3 control-label">创建人：</label>-->
-<!--                <div class="col-sm-8">-->
-<!--                    <input name="creator" class="form-control" type="text">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="form-group">    -->
-<!--                <label class="col-sm-3 control-label">更新人：</label>-->
-<!--                <div class="col-sm-8">-->
-<!--                    <input name="updator" class="form-control" type="text">-->
-<!--                </div>-->
-<!--            </div>-->
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -43,6 +50,49 @@
             if ($.validate.form()) {
                 $.operate.save(prefix + "/add", $('#form-category-add').serialize());
             }
+        }
+        $(function(){
+            $("#form-category-add > div:eq(2)").hide();
+        })
+        function loadFirstLevel()
+        {
+            var level = $("#level").val();
+            if(level == '1'){
+                $("#form-category-add > div:eq(2)").hide();
+                return ;
+            }
+            var url = ctx + "product/category/list";
+            var data = { "level": 1 };
+            var config = {
+                url: url,
+                type: "post",
+                dataType: "json",
+                data: data,
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍候...");
+                },
+                success: function(result) {
+                    var selectElement = $('#parentId');
+                    selectElement.empty();
+                    // Iterate over the array of objects
+                    $.each(result.rows, function(index, value) {
+                        var option = $('<option></option>');
+                        if(index ==0)
+                        {
+                            var firstOp = $('<option></option>');
+                            firstOp.attr('value', -1);
+                            firstOp.text("请选择父级分类");
+                            selectElement.append(firstOp);
+                        }
+                        option.attr('value', value.id);
+                        option.text(value.name);
+                        selectElement.append(option);
+                    });
+                    $.modal.closeLoading();
+                    $("#form-category-add > div:eq(2)").show();
+                }
+            };
+            $.ajax(config);
         }
     </script>
 </body>

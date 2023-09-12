@@ -23,7 +23,7 @@ public class ProdQuotationHistory extends BaseEntity
     private String name;
 
     /** 产品分类id */
-    @Excel(name = "产品分类id")
+    @Excel(name = "产品id")
     private Long prodId;
 
     /** 产品批次ID */

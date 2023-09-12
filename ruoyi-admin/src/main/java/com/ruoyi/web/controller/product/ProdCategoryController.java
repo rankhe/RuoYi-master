@@ -52,6 +52,7 @@ public class ProdCategoryController extends BaseController
     public TableDataInfo list(ProdCategory prodCategory)
     {
         startPage();
+        prodCategory.setOwnerUserId(getUserId());
         if(prodCategory.getStatus() == null)
         {
             prodCategory.setStatus(CommonStatus.OK.getCode());
@@ -59,6 +60,24 @@ public class ProdCategoryController extends BaseController
         List<ProdCategory> list = prodCategoryService.selectProdCategoryList(prodCategory);
         return getDataTable(list);
     }
+
+//    /**
+//     * 查询产品分类列表
+//     */
+//    @RequiresPermissions("product:category:list")
+//    @PostMapping("/listFirstLevl")
+//    @ResponseBody
+//    public TableDataInfo listFirstLevel(ProdCategory prodCategory)
+//    {
+//        startPage();
+//        if(prodCategory.getStatus() == null)
+//        {
+//            prodCategory.setStatus(CommonStatus.OK.getCode());
+//        }
+//        prodCategory.setLevel(1);
+//        List<ProdCategory> list = prodCategoryService.selectProdCategoryList(prodCategory);
+//        return getDataTable(list);
+//    }
 
     /**
      * 导出产品分类列表
@@ -93,6 +112,11 @@ public class ProdCategoryController extends BaseController
     public AjaxResult addSave(ProdCategory prodCategory)
     {
         prodCategory.setCreator(getLoginName());
+        if(prodCategory.getLevel() == 1)
+        {
+            prodCategory.setParentId(0l);
+        }
+        prodCategory.setOwnerUserId(getUserId());
         prodCategory.setCreateTime(Calendar.getInstance().getTime());
         return toAjax(prodCategoryService.insertProdCategory(prodCategory));
     }
@@ -105,6 +129,11 @@ public class ProdCategoryController extends BaseController
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
         ProdCategory prodCategory = prodCategoryService.selectProdCategoryById(id);
+        ProdCategory condition = new ProdCategory();
+        condition.setStatus(CommonStatus.OK.getCode());
+        condition.setLevel(1);
+        List<ProdCategory> prodCategories = prodCategoryService.selectProdCategoryList(condition);
+        mmap.put("firstLevels",prodCategories);
         mmap.put("prodCategory", prodCategory);
         return prefix + "/edit";
     }
@@ -119,6 +148,10 @@ public class ProdCategoryController extends BaseController
     public AjaxResult editSave(ProdCategory prodCategory)
     {
         prodCategory.setUpdator(getLoginName());
+        if(prodCategory.getLevel() == 1)
+        {
+            prodCategory.setParentId(0l);
+        }
         prodCategory.setUpdateTime(Calendar.getInstance().getTime());
         return toAjax(prodCategoryService.updateProdCategory(prodCategory));
     }
